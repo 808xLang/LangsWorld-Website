@@ -71,8 +71,7 @@ export default function gridListWith() {
           WELCOME TO LANGSWORLD
         </Heading>
         <Text color={'gray.600'} fontSize={{ base: 'sm', sm: 'lg' }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis obcaecati ut
-          cupiditate pariatur, dignissimos, placeat amet officiis.
+          LangsWorld is not done yet but aye this is what I have now
         </Text>
       </Stack>
 
