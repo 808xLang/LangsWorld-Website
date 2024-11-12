@@ -1,4 +1,9 @@
 'use client'
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { auth } from '../components/googleSignin/config'; // Ensure you have the correct path
+
+
 
 import {
   Box,
@@ -29,7 +34,10 @@ interface CardProps {
   href: string
 }
 
+
+
 const Card = ({ heading, description, icon, href }: CardProps) => {
+  
   return (
     <Box
       maxW={{ base: 'full', md: '275px' }}
@@ -64,11 +72,27 @@ const Card = ({ heading, description, icon, href }: CardProps) => {
 }
 
 export default function gridListWith() {
+
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+       {
+        setIsLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [router]);
+
+  if (isLoading) return <p>Loading...</p>;
+
   return (
     <Box p={4}>
       <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
         <Heading fontSize={{ base: '2xl', sm: '4xl' }} fontWeight={'bold'}>
-          WELCOME TO LANGSWORLD
+          WELCOME TO LANGSWORLD 
         </Heading>
         <Text color={'gray.600'} fontSize={{ base: 'sm', sm: 'lg' }}>
           LangsWorld is not done yet but aye this is what I have now

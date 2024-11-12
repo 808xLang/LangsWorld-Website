@@ -9,7 +9,6 @@ import { ChakraProvider } from '@chakra-ui/react'
 const Home: React.FC = () => {
     return (
         <ChakraProvider>
-            <Navbar />
             <Homepage/>
             <Calender/>
         </ChakraProvider>
