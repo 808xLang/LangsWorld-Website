@@ -68,13 +68,12 @@ export default function WithSubnavigation() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Text
-            textAlign={useBreakpointValue({ base: "center", md: "left" })}
-            fontFamily={"heading"}
-            color={useColorModeValue("gray.800", "white")}
-          >
-            LW
-          </Text>
+          <Image
+            boxSize="100px"
+            objectFit="cover"
+            src="Logo.png"
+            alt="LW"
+          />
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
@@ -101,9 +100,9 @@ export default function WithSubnavigation() {
                 alt={user.displayName || "User Avatar"}
                 mr={2}
               />
-              <Button fontSize={"sm"} fontWeight={400} variant={"link"}>
+              {/* <Button fontSize={"sm"} fontWeight={400} variant={"link"}>
                 {user.displayName}
-              </Button>
+              </Button> */}
               <Button
                 fontSize={"sm"}
                 fontWeight={400}
@@ -337,7 +336,7 @@ const NAV_ITEMS: Array<NavItem> = [
       {
         label: "Book a session",
         subLabel: "Book a session",
-        href: "#",
+        href: "/calendar",
       },
       {
         label: "Freelance Projects",
