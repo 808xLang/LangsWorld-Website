@@ -1,8 +1,10 @@
 "use client";
-
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { auth } from "../components/googleSignin/config"; // Ensure you have the correct path
+import { FaInstagram } from "react-icons/fa";
+
 
 import {
   Box,
@@ -68,13 +70,15 @@ export default function WithSubnavigation() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
+<Link href="/" passHref>
           <Image
             boxSize="100px"
             objectFit="cover"
             src="Logo.png"
             alt="LW"
+            cursor="pointer"
           />
-
+</Link>
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
           </Flex>
@@ -105,7 +109,7 @@ export default function WithSubnavigation() {
               </Button> */}
               <Button
                 fontSize={"sm"}
-                fontWeight={400}
+                // fontWeight={400}
                 variant={"link"}
                 onClick={() => auth.signOut()}
               >
@@ -121,7 +125,7 @@ export default function WithSubnavigation() {
                 fontSize={"sm"}
                 fontWeight={600}
                 color={"white"}
-                bg={"pink.400"}
+                bg={"purple.600"}
                 href={"/signin"}
                 _hover={{
                   bg: "pink.300",
@@ -320,7 +324,7 @@ const NAV_ITEMS: Array<NavItem> = [
     children: [
       {
         label: "Gallery",
-        subLabel: "Premade beats for purchasing",
+        subLabel: "Beats (Must be signed in)",
         href: "/BeatGallery",
       },
       {
@@ -346,7 +350,17 @@ const NAV_ITEMS: Array<NavItem> = [
     ],
   },
   {
-    label: "Instagram",
+    label: "DrumKits",
+    children: [
+      {
+        label: "Loops",
+        subLabel: "Custom Loops Made by 808Lang",
+        href: "/Collabs",
+      },
+    ],
+  },
+  {
+    label: <FaInstagram />,
     href: "https://www.instagram.com/808lang/",
   },
   {
@@ -354,3 +368,8 @@ const NAV_ITEMS: Array<NavItem> = [
     href: "https://soundcloud.com/808lang",
   },
 ];
+
+
+
+
+

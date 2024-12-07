@@ -95,12 +95,14 @@ export default function gridListWith() {
           WELCOME TO LANGSWORLD
         </Heading>
         <Text color={"gray.600"} fontSize={{ base: "sm", sm: "lg" }}>
-          LangsWorld is not done yet but aye this is what I have now
+          Random Text
         </Text>
       </Stack>
 
       <Container maxW={"9xl"} mt={12}>
-        <HStack spacing={4} justify="center"> {/* Horizontal layout with centered alignment */}
+        <HStack spacing={4} justify="center">
+          {" "}
+          {/* Horizontal layout with centered alignment */}
           <AspectRatio width="25%" ratio={4 / 3}>
             <iframe
               title="Is it Tru 1"
@@ -132,11 +134,13 @@ export default function gridListWith() {
         </HStack>
       </Container>
       <Container maxW={"9x"} mt={12}>
-        <HStack spacing={4} justify="center"> {/* Horizontal layout with centered alignment */}
+        <HStack spacing={4} justify="center">
+          {" "}
+          {/* Horizontal layout with centered alignment */}
           <AspectRatio width="25%" ratio={4 / 3}>
             <iframe
               title="Is it Tru 1"
-              src="https://www.youtube.com/embed/iMqN9bmoNjI"
+              src="https://www.youtube.com/embed/ahNtp1dvrpg"
               allowFullScreen
             />
           </AspectRatio>

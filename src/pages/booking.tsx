@@ -1,4 +1,4 @@
-import calenderBooking from "../components/calender"
+import calenderBooking from "./calendar"
 
 
 

@@ -4,7 +4,8 @@ import { add, format } from "date-fns";
 import { FC } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { INTERVAL, STORE_CLOSING_TIME, STORE_OPENING_TIME } from "./constants/config";
+import '../styles/Calendar.css';
+import { INTERVAL, STORE_CLOSING_TIME, STORE_OPENING_TIME } from "../components/constants/config";
 
 interface indexProps {}
 interface DateType {

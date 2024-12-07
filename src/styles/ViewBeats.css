@@ -1,0 +1,44 @@
+/* styles/ViewBeats.module.css */
+.container {
+  padding: 20px;
+  background-color: #f9f1f1;
+}
+
+.header {
+  text-align: center;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+.playlist {
+  list-style: none;
+  padding: 0;
+}
+
+.playlistItem {
+  margin: 10px 0;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.audioInfo span {
+  font-size: 16px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.waveform {
+  width: 100%;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.playlistItem {
+  margin-bottom: 20px;
+}

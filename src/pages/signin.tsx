@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'; // Import Next.js router
 import { auth, provider, signInWithPopup } from '../components/googleSignin/config';
 import { User } from 'firebase/auth';
+import {Button} from "@chakra-ui/react"
 
 export default function GoogleSignIn() {
   const [user, setUser] = useState<User | null>(null);
@@ -38,10 +39,10 @@ export default function GoogleSignIn() {
           <p>Welcome, {user.displayName}</p>
           <img src={user.photoURL || ''} alt={user.displayName || 'User Avatar'} />
           <p>Email: {user.email}</p>
-          <button onClick={handleSignOut}>Sign out</button>
+          <Button onClick={handleSignOut}>Sign out</Button>
         </div>
       ) : (
-        <button onClick={handleGoogleSignIn}>Sign in with Google</button>
+        <Button onClick={handleGoogleSignIn}>Sign in with Google</Button>
       )}
     </div>
   );
