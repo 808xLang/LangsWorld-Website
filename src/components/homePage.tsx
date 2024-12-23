@@ -95,7 +95,7 @@ export default function gridListWith() {
           WELCOME TO LANGSWORLD
         </Heading>
         <Text color={"gray.600"} fontSize={{ base: "sm", sm: "lg" }}>
-          Random Text
+          Producer and engineer Langston Wooten has over 1 Million play across Youtube
         </Text>
       </Stack>
 
@@ -147,7 +147,55 @@ export default function gridListWith() {
           <AspectRatio width="25%" ratio={4 / 3}>
             <iframe
               title="Is it Tru 2"
+              src="https://www.youtube.com/embed/CeOeAbsfZAU"
+              allowFullScreen
+            />
+          </AspectRatio>
+          <AspectRatio width="25%" ratio={4 / 3}>
+            <iframe
+              title="Is it Tru 2"
+              src="https://www.youtube.com/embed/StmKKD3ZoXk"
+              allowFullScreen
+            />
+          </AspectRatio>
+          <AspectRatio width="25%" ratio={4 / 3}>
+            <iframe
+              title="Is it Tru 2"
+              src="https://www.youtube.com/embed/yfZ1HSJQJuM"
+              allowFullScreen
+            />
+          </AspectRatio>
+        </HStack>
+      </Container>
+      <Container maxW={"9x"} mt={12}>
+        <HStack spacing={4} justify="center">
+          {" "}
+          {/* Horizontal layout with centered alignment */}
+          <AspectRatio width="25%" ratio={4 / 3}>
+            <iframe
+              title="Is it Tru 1"
+              src="https://www.youtube.com/embed/rA06WkDgIfM"
+              allowFullScreen
+            />
+          </AspectRatio>
+          <AspectRatio width="25%" ratio={4 / 3}>
+            <iframe
+              title="Is it Tru 2"
               src="https://www.youtube.com/embed/TIZ3SUhAXNk"
+              allowFullScreen
+            />
+          </AspectRatio>
+          <AspectRatio width="25%" ratio={4 / 3}>
+            <iframe
+              title="Is it Tru 2"
+              src="https://www.youtube.com/embed/xVsE2PEMZOg"
+              allowFullScreen
+            />
+          </AspectRatio>
+          <AspectRatio width="25%" ratio={4 / 3}>
+            <iframe
+              title="Is it Tru 2"
+              src="https://www.youtube.com/embed/yfZ1HSJQJuM"
               allowFullScreen
             />
           </AspectRatio>
