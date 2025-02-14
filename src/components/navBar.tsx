@@ -1,10 +1,9 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState, ReactNode } from "react";
 import { useRouter } from "next/router";
 import { auth } from "../components/googleSignin/config"; // Ensure you have the correct path
-import { FaInstagram } from "react-icons/fa";
-
+import { FaInstagram, FaSoundcloud } from "react-icons/fa";
 
 import {
   Box,
@@ -29,6 +28,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
+import { User } from "firebase/auth";
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -45,9 +45,13 @@ export default function WithSubnavigation() {
   return (
     <Box>
       <Flex
-        bg={useColorModeValue("white", "gray.800")}
+        bg={useColorModeValue(
+          "linear-gradient(90deg, rgba(134, 182, 255, 1) 50%, rgba(189, 147, 249, 1) 100%)",
+          "gray.800"
+        )}
         color={useColorModeValue("gray.600", "white")}
-        minH={"60px"}
+        boxShadow="md"
+        minH={"80px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}
@@ -69,16 +73,20 @@ export default function WithSubnavigation() {
             aria-label={"Toggle Navigation"}
           />
         </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-<Link href="/" passHref>
-          <Image
-            boxSize="100px"
-            objectFit="cover"
-            src="Logo.png"
-            alt="LW"
-            cursor="pointer"
-          />
-</Link>
+        <Flex
+          flex={{ base: 1 }}
+          justify={{ base: "center", md: "start" }}
+          align={"center"} // Ensure everything aligns vertically
+        >
+          <Link href="/" passHref>
+            <Image
+              boxSize="100px"
+              objectFit="cover"
+              src="Logo.png"
+              alt="LW"
+              cursor="pointer"
+            />
+          </Link>
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
           </Flex>
@@ -108,7 +116,7 @@ export default function WithSubnavigation() {
                 {user.displayName}
               </Button> */}
               <Button
-                fontSize={"sm"}
+                fontSize={"md"}
                 // fontWeight={400}
                 variant={"link"}
                 onClick={() => auth.signOut()}
@@ -151,57 +159,48 @@ const DesktopNav = () => {
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
 
   return (
-    <Stack direction={"row"} spacing={4}>
-      {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
-          <Popover trigger={"hover"} placement={"bottom-start"}>
-            <PopoverTrigger>
-              {/* This makes it so that the website opens inside of a different tab */}
-              <Box
-                as="a"
-                p={2}
-                href={navItem.href ?? "#"}
-                target={
-                  navItem.href && navItem.href.startsWith("http")
-                    ? "_blank"
-                    : undefined
-                }
-                rel={
-                  navItem.href && navItem.href.startsWith("http")
-                    ? "noopener noreferrer"
-                    : undefined
-                }
-                fontSize={"sm"}
-                fontWeight={500}
-                color={linkColor}
-                _hover={{
-                  textDecoration: "none",
-                  color: linkHoverColor,
-                }}
-              >
-                {navItem.label}
-              </Box>
-            </PopoverTrigger>
-
-            {navItem.children && (
-              <PopoverContent
-                border={0}
-                boxShadow={"xl"}
-                bg={popoverContentBgColor}
-                p={4}
-                rounded={"xl"}
-                minW={"sm"}
-              >
-                <Stack>
-                  {navItem.children.map((child) => (
-                    <DesktopSubNav key={child.label} {...child} />
-                  ))}
-                </Stack>
-              </PopoverContent>
-            )}
-          </Popover>
+    <Stack direction={"row"} spacing={8} align={"center"}>
+{NAV_ITEMS.map((navItem, index) => (
+  <Box key={`nav-item-${index}`}> {/* Add an explicit unique key */}
+    <Popover trigger={"hover"} placement={"bottom-start"}>
+      <PopoverTrigger>
+        <Box
+          as="a"
+          p={4}
+          href={navItem.href ?? "#"}
+          fontSize={"md"}
+          fontWeight={600}
+          color={useColorModeValue("gray.600", "gray.200")}
+          _hover={{
+            textDecoration: "underline",
+            color: useColorModeValue("pink.400", "pink.200"),
+            transform: "scale(1.05)",
+            transition: "all 0.3s ease",
+          }}
+        >
+          {navItem.label}
         </Box>
-      ))}
+      </PopoverTrigger>
+      {navItem.children && (
+        <PopoverContent
+          border={0}
+          boxShadow={"xl"}
+          bg={useColorModeValue("white", "gray.800")}
+          p={4}
+          rounded={"xl"}
+          minW={"sm"}
+        >
+          <Stack>
+            {navItem.children.map((child, childIndex) => (
+              <DesktopSubNav key={`subnav-item-${childIndex}`} {...child} />
+            ))}
+          </Stack>
+        </PopoverContent>
+      )}
+    </Popover>
+  </Box>
+))}
+
     </Stack>
   );
 };
@@ -251,8 +250,8 @@ const MobileNav = () => {
       p={4}
       display={{ md: "none" }}
     >
-      {NAV_ITEMS.map((navItem) => (
-        <MobileNavItem key={navItem.label} {...navItem} />
+      {NAV_ITEMS.map((navItem, key) => (
+        <MobileNavItem {...navItem} key={key} />
       ))}
     </Stack>
   );
@@ -260,6 +259,7 @@ const MobileNav = () => {
 
 const MobileNavItem = ({ label, children, href }: NavItem) => {
   const { isOpen, onToggle } = useDisclosure();
+  console.log({label})
 
   return (
     <Stack spacing={4} onClick={children && onToggle}>
@@ -273,12 +273,12 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
           textDecoration: "none",
         }}
       >
-        <Text
+        {typeof label === "string" ? <Text
           fontWeight={600}
           color={useColorModeValue("gray.600", "gray.200")}
         >
           {label}
-        </Text>
+        </Text> : <Box>{label}</Box>}
         {children && (
           <Icon
             as={ChevronDownIcon}
@@ -300,8 +300,8 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
           align={"start"}
         >
           {children &&
-            children.map((child) => (
-              <Box as="a" key={child.label} py={2} href={child.href}>
+            children.map((child, key) => (
+              <Box as="a"  py={2} key={key} href={child.href}>
                 {child.label}
               </Box>
             ))}
@@ -312,10 +312,11 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
 };
 
 interface NavItem {
-  label: string;
+  label: string | ReactNode; //This will alow a string to be a node
   subLabel?: string;
   children?: Array<NavItem>;
   href?: string;
+  key?: number;
 }
 
 const NAV_ITEMS: Array<NavItem> = [
@@ -360,16 +361,28 @@ const NAV_ITEMS: Array<NavItem> = [
     ],
   },
   {
-    label: <FaInstagram />,
+    label: (
+      <Box
+        p={2}
+        fontSize={"2xl"}
+        color={("purple.600", "purple.300")}
+        _hover={{
+          color: ("pink.400", "pink.200"),
+          transform: "scale(1.2)",
+          transition: "all 0.3s ease",
+        }}
+      >
+        <FaInstagram />
+      </Box>
+    ), // Add padding and adjust font size
     href: "https://www.instagram.com/808lang/",
   },
   {
-    label: "SoundCloud",
+    label: (
+      <Box p={2} fontSize="4xl">
+        <FaSoundcloud />
+      </Box>
+    ), // Consistent styling
     href: "https://soundcloud.com/808lang",
   },
 ];
-
-
-
-
-
