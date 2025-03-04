@@ -88,224 +88,233 @@ export default function gridListWith() {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <Box  minH="100vh" py={8}>
-    <Box p={4}>
-      <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
-        <Heading fontSize={{ base: "2xl", sm: "4xl" }} fontWeight={"bold"}>
-          WELCOME TO LANGSWORLD
-        </Heading>
-        <Text color={"gray.600"} fontSize={{ base: "sm", sm: "lg" }}>
-          Producer and engineer Langston Wooten has over 1 Million play across
-          Youtube
-        </Text>
-      </Stack>
-
-      <Container
-        maxW="9xl"
-        mt={12}
-        p={6}
-        // bg="purple.300"
-        borderRadius="lg"
-        boxShadow="base"
+    <Box minH="100vh" py={8}>
+      <Box
+        p={4}
+        // background={"grey"}
       >
-        <HStack spacing={4} justify="center">
-          {" "}
-          {/* Horizontal layout with centered alignment */}
-          <AspectRatio
-            width="25%"
-            ratio={4 / 3}
-            borderRadius="lg"
-            overflow="hidden"
-            boxShadow="2xl"
-            _hover={{
-              transform: "scale(1.05)",
-              transition: "transform 0.2s ease-in-out",
-            }}
-          >
-            <iframe
-              title="Is it Tru 1"
-              src="https://www.youtube.com/embed/iMqN9bmoNjI"
-              allowFullScreen
-            />
-          </AspectRatio>
-          <AspectRatio
-            width="25%"
-            ratio={4 / 3}
-            borderRadius="lg"
-            overflow="hidden"
-            boxShadow="2xl"
-            _hover={{
-              transform: "scale(1.05)",
-              transition: "transform 0.2s ease-in-out",
-            }}
-          >
-            <iframe
-              title="Is it Tru 2"
-              src="https://www.youtube.com/embed/pWozhSr3YBI"
-              allowFullScreen
-            />
-          </AspectRatio>
-          <AspectRatio
-            width="25%"
-            ratio={4 / 3}
-            borderRadius="lg"
-            overflow="hidden"
-            boxShadow="2xl"
-            _hover={{
-              transform: "scale(1.05)",
-              transition: "transform 0.2s ease-in-out",
-            }}
-          >
-            <iframe
-              title="Is it Tru 1"
-              src="https://www.youtube.com/embed/iMqN9bmoNjI"
-              allowFullScreen
-            />
-          </AspectRatio>
-          <AspectRatio
-            width="25%"
-            ratio={4 / 3}
-            borderRadius="lg"
-            overflow="hidden"
-            boxShadow="2xl"
-            _hover={{
-              transform: "scale(1.05)",
-              transition: "transform 0.2s ease-in-out",
-            }}
-          >
-            <iframe
-              title="Is it Tru 1"
-              src="https://www.youtube.com/embed/Ub35MBQXKGI"
-              allowFullScreen
-            />
-          </AspectRatio>
-        </HStack>
-      </Container>
-      <Container maxW="9xl"
-        mt={12}
-        p={6}
-        // bg="purple.300"
-        borderRadius="lg"
-        boxShadow="base">
-        <HStack spacing={4} justify="center">
-          {" "}
-          {/* Horizontal layout with centered alignment */}
-          <AspectRatio
-            width="25%"
-            ratio={4 / 3}
-            borderRadius="lg"
-            overflow="hidden"
-            boxShadow="2xl"
-            _hover={{
-              transform: "scale(1.05)",
-              transition: "transform 0.2s ease-in-out",
-            }}
-          >
-            <iframe
-              title="Is it Tru 1"
-              src="https://www.youtube.com/embed/ahNtp1dvrpg"
-              allowFullScreen
-            />
-          </AspectRatio>
-          <AspectRatio
-            width="25%"
-            ratio={4 / 3}
-            borderRadius="lg"
-            overflow="hidden"
-            boxShadow="2xl"
-            _hover={{
-              transform: "scale(1.05)",
-              transition: "transform 0.2s ease-in-out",
-            }}
-          >
-            <iframe
-              title="Is it Tru 2"
-              src="https://www.youtube.com/embed/CeOeAbsfZAU"
-              allowFullScreen
-            />
-          </AspectRatio>
-          <AspectRatio
-            width="25%"
-            ratio={4 / 3}
-            borderRadius="lg"
-            overflow="hidden"
-            boxShadow="2xl"
-            _hover={{
-              transform: "scale(1.05)",
-              transition: "transform 0.2s ease-in-out",
-            }}
-          >
-            <iframe
-              title="Is it Tru 2"
-              src="https://www.youtube.com/embed/StmKKD3ZoXk"
-              allowFullScreen
-            />
-          </AspectRatio>
-          <AspectRatio
-            width="25%"
-            ratio={4 / 3}
-            borderRadius="lg"
-            overflow="hidden"
-            boxShadow="2xl"
-            _hover={{
-              transform: "scale(1.05)",
-              transition: "transform 0.2s ease-in-out",
-            }}
-          >
-            <iframe
-              title="Is it Tru 2"
-              src="https://www.youtube.com/embed/yfZ1HSJQJuM"
-              allowFullScreen
-            />
-          </AspectRatio>
-        </HStack>
-      </Container>
-      <Container maxW="9xl"
-        mt={12}
-        p={6}
-        // bg="purple.300"
-        borderRadius="lg"
-        boxShadow="base">
-        <HStack spacing={4} justify="center">
-          {" "}
-          {/* Horizontal layout with centered alignment */}
-          <AspectRatio
-            width="25%"
-            ratio={4 / 3}
-            borderRadius="lg"
-            overflow="hidden"
-            boxShadow="2xl"
-            _hover={{
-              transform: "scale(1.05)",
-              transition: "transform 0.2s ease-in-out",
-            }}
-          >
-            <iframe
-              title="Is it Tru 1"
-              src="https://www.youtube.com/embed/rA06WkDgIfM"
-              allowFullScreen
-            />
-          </AspectRatio>
-          <AspectRatio
-            width="25%"
-            ratio={4 / 3}
-            borderRadius="lg"
-            overflow="hidden"
-            boxShadow="2xl"
-            _hover={{
-              transform: "scale(1.05)",
-              transition: "transform 0.2s ease-in-out",
-            }}
-          >
-            <iframe
-              title="Is it Tru 2"
-              src="https://www.youtube.com/embed/TIZ3SUhAXNk"
-              allowFullScreen
-            />
-          </AspectRatio>
-        </HStack>
-      </Container>
-    </Box>
+        <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"}>
+          <Heading fontSize={{ base: "2xl", sm: "4xl" }} fontWeight={"bold"}>
+            WELCOME TO LANGSWORLD
+          </Heading>
+          <Text color={"gray.600"} fontSize={{ base: "sm", sm: "lg" }}>
+            Producer and engineer Langston Wooten has over 1 Million play across
+            Youtube
+          </Text>
+        </Stack>
+
+        <Container
+          maxW="9xl"
+          mt={12}
+          p={6}
+          bg="purple.300"
+          // bg="grey.800"
+          borderRadius="lg"
+          boxShadow="base"
+          // bg="grey.800"
+        >
+          <HStack spacing={4} justify="center">
+            {" "}
+            {/* Horizontal layout with centered alignment */}
+            <AspectRatio
+              width="25%"
+              ratio={4 / 3}
+              borderRadius="lg"
+              overflow="hidden"
+              boxShadow="2xl"
+              _hover={{
+                transform: "scale(1.05)",
+                transition: "transform 0.2s ease-in-out",
+              }}
+            >
+              <iframe
+                title="Is it Tru 1"
+                src="https://www.youtube.com/embed/rA06WkDgIfM"
+                allowFullScreen
+              />
+            </AspectRatio>
+            <AspectRatio
+              width="25%"
+              ratio={4 / 3}
+              borderRadius="lg"
+              overflow="hidden"
+              boxShadow="2xl"
+              _hover={{
+                transform: "scale(1.05)",
+                transition: "transform 0.2s ease-in-out",
+              }}
+            >
+              <iframe
+                title="Is it Tru 2"
+                src="https://www.youtube.com/embed/pWozhSr3YBI"
+                allowFullScreen
+              />
+            </AspectRatio>
+            <AspectRatio
+              width="25%"
+              ratio={4 / 3}
+              borderRadius="lg"
+              overflow="hidden"
+              boxShadow="2xl"
+              _hover={{
+                transform: "scale(1.05)",
+                transition: "transform 0.2s ease-in-out",
+              }}
+            >
+              <iframe
+                title="Is it Tru 1"
+                src="https://www.youtube.com/embed/iMqN9bmoNjI"
+                allowFullScreen
+              />
+            </AspectRatio>
+            <AspectRatio
+              width="25%"
+              ratio={4 / 3}
+              borderRadius="lg"
+              overflow="hidden"
+              boxShadow="2xl"
+              _hover={{
+                transform: "scale(1.05)",
+                transition: "transform 0.2s ease-in-out",
+              }}
+            >
+              <iframe
+                title="Is it Tru 1"
+                src="https://www.youtube.com/embed/Ub35MBQXKGI"
+                allowFullScreen
+              />
+            </AspectRatio>
+          </HStack>
+        </Container>
+        <Container
+          maxW="9xl"
+          mt={12}
+          p={6}
+          // bg="purple.300"
+          borderRadius="lg"
+          boxShadow="base"
+        >
+          <HStack spacing={4} justify="center">
+            {" "}
+            {/* Horizontal layout with centered alignment */}
+            <AspectRatio
+              width="25%"
+              ratio={4 / 3}
+              borderRadius="lg"
+              overflow="hidden"
+              boxShadow="2xl"
+              _hover={{
+                transform: "scale(1.05)",
+                transition: "transform 0.2s ease-in-out",
+              }}
+            >
+              <iframe
+                title="Is it Tru 1"
+                src="https://www.youtube.com/embed/ahNtp1dvrpg"
+                allowFullScreen
+              />
+            </AspectRatio>
+            <AspectRatio
+              width="25%"
+              ratio={4 / 3}
+              borderRadius="lg"
+              overflow="hidden"
+              boxShadow="2xl"
+              _hover={{
+                transform: "scale(1.05)",
+                transition: "transform 0.2s ease-in-out",
+              }}
+            >
+              <iframe
+                title="Is it Tru 2"
+                src="https://www.youtube.com/embed/CeOeAbsfZAU"
+                allowFullScreen
+              />
+            </AspectRatio>
+            <AspectRatio
+              width="25%"
+              ratio={4 / 3}
+              borderRadius="lg"
+              overflow="hidden"
+              boxShadow="2xl"
+              _hover={{
+                transform: "scale(1.05)",
+                transition: "transform 0.2s ease-in-out",
+              }}
+            >
+              <iframe
+                title="Is it Tru 2"
+                src="https://www.youtube.com/embed/StmKKD3ZoXk"
+                allowFullScreen
+              />
+            </AspectRatio>
+            <AspectRatio
+              width="25%"
+              ratio={4 / 3}
+              borderRadius="lg"
+              overflow="hidden"
+              boxShadow="2xl"
+              _hover={{
+                transform: "scale(1.05)",
+                transition: "transform 0.2s ease-in-out",
+              }}
+            >
+              <iframe
+                title="Is it Tru 2"
+                src="https://www.youtube.com/embed/yfZ1HSJQJuM"
+                allowFullScreen
+              />
+            </AspectRatio>
+          </HStack>
+        </Container>
+        <Container
+          maxW="9xl"
+          mt={12}
+          p={6}
+          // bg="purple.300"
+          borderRadius="lg"
+          boxShadow="base"
+        >
+          <HStack spacing={4} justify="center">
+            {" "}
+            {/* Horizontal layout with centered alignment */}
+            <AspectRatio
+              width="25%"
+              ratio={4 / 3}
+              borderRadius="lg"
+              overflow="hidden"
+              boxShadow="2xl"
+              _hover={{
+                transform: "scale(1.05)",
+                transition: "transform 0.2s ease-in-out",
+              }}
+            >
+              <iframe
+                title="Is it Tru 1"
+                src="https://www.youtube.com/embed/rA06WkDgIfM"
+                allowFullScreen
+              />
+            </AspectRatio>
+            <AspectRatio
+              width="25%"
+              ratio={4 / 3}
+              borderRadius="lg"
+              overflow="hidden"
+              boxShadow="2xl"
+              _hover={{
+                transform: "scale(1.05)",
+                transition: "transform 0.2s ease-in-out",
+              }}
+            >
+              <iframe
+                title="Is it Tru 2"
+                src="https://www.youtube.com/embed/TIZ3SUhAXNk"
+                allowFullScreen
+              />
+            </AspectRatio>
+          </HStack>
+        </Container>
+      </Box>
     </Box>
   );
 }

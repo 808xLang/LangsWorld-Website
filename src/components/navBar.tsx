@@ -4,6 +4,7 @@ import { createContext, useEffect, useState, ReactNode } from "react";
 import { useRouter } from "next/router";
 import { auth } from "../components/googleSignin/config"; // Ensure you have the correct path
 import { FaInstagram, FaSoundcloud } from "react-icons/fa";
+import { ColorModeScript, useColorMode } from '@chakra-ui/react';
 
 import {
   Box,
@@ -21,7 +22,23 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
 } from "@chakra-ui/react";
+
 import {
   HamburgerIcon,
   CloseIcon,
@@ -31,10 +48,12 @@ import {
 import { User } from "firebase/auth";
 
 export default function WithSubnavigation() {
-  const { isOpen, onToggle } = useDisclosure();
+  const { isOpen, onToggle, onClose } = useDisclosure();
+  // const { drawerOpen, draweronOpen, draweronClose } = useDisclosure();
   const [user, setUser] = useState<User | null>(null); // State to track user login status
-
+  // const btnRef = React.useRef()
   // Use useEffect to listen for authentication state changes
+  const { colorMode, toggleColorMode } = useColorMode()
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser); // Update user state on login or logout
@@ -54,10 +73,12 @@ export default function WithSubnavigation() {
         minH={"80px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
-        borderBottom={1}
+        borderBottom={3}
         borderStyle={"solid"}
         borderColor={useColorModeValue("gray.200", "gray.900")}
         align={"center"}
+        justify="space-between"
+        w="100%"
       >
         <Flex
           flex={{ base: 1, md: "auto" }}
@@ -81,10 +102,17 @@ export default function WithSubnavigation() {
           <Link href="/" passHref>
             <Image
               boxSize="100px"
+              borderRadius="full"
               objectFit="cover"
               src="Logo.png"
               alt="LW"
               cursor="pointer"
+              border="2px solid white"
+              shadow="lg"
+              _hover={{
+                transform: "scale(1.05)",
+                transition: "0.3s ease-in-out",
+              }} // Smooth hover effect
             />
           </Link>
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
@@ -104,44 +132,82 @@ export default function WithSubnavigation() {
             <>
               {/* REMEMBER TO CHANGE THIS TO A LINK TO THE USERS PROFILE DONT KNOW WHAT TO PUT
             INSIDE OF THE PROFILE PAGE YET */}
+
               <Image
                 src={user.photoURL || ""}
-                boxSize="40px"
+                boxSize="55px"
                 borderRadius="full"
-                fit="cover"
+                objectFit="cover"
                 alt={user.displayName || "User Avatar"}
-                mr={2}
+                mr={100}
+                // ml="auto"
+                cursor="pointer"
+                onClick={onToggle}
+                _hover={{
+                  transform: "scale(1.2)",
+                  transition: "0.2s ease-in-out",
+                }}
               />
+              <Drawer
+                isOpen={isOpen}
+                placement="right"
+                onClose={onClose}
+                // finalFocusRef={btnRef}
+              >
+                <DrawerOverlay />
+                <DrawerContent>
+                  <DrawerHeader>
+                    <Flex>
+                      <Image
+                        src={user.photoURL || ""}
+                        w="100%"
+                        maxW="200px" // Prevents it from getting too wide
+                        h="auto"
+                        objectFit="cover"
+                        mx="auto"
+                        display="block"
+                      />
+                    </Flex>
+                  </DrawerHeader>
+                  <DrawerFooter>
+                    <Button
+                      variant="outline"
+                      fontSize={"md"}
+                      // fontWeight={400}
+                      // variant={"link"}
+                      onClick={() => auth.signOut()}
+                    >
+                      Sign Out
+                    </Button>
+                  </DrawerFooter>
+                </DrawerContent>
+              </Drawer>
+
               {/* <Button fontSize={"sm"} fontWeight={400} variant={"link"}>
                 {user.displayName}
               </Button> */}
-              <Button
+              {/* <Button
                 fontSize={"md"}
                 // fontWeight={400}
                 variant={"link"}
                 onClick={() => auth.signOut()}
               >
                 Sign Out
-              </Button>
+              </Button> */}
             </>
           ) : (
             // Show "Sign In" and "Create an Account" buttons when not logged in
-            <>
+            <Link href="/signin" passHref>
               <Button
-                as={"a"}
-                display={{ base: "none", md: "inline-flex" }}
                 fontSize={"sm"}
                 fontWeight={600}
                 color={"white"}
                 bg={"purple.600"}
-                href={"/signin"}
-                _hover={{
-                  bg: "pink.300",
-                }}
+                _hover={{ bg: "pink.300" }}
               >
-                Sign in with google
+                Sign in with Google
               </Button>
-            </>
+            </Link>
           )}
         </Stack>
       </Flex>
@@ -159,75 +225,106 @@ const DesktopNav = () => {
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
 
   return (
-    <Stack direction={"row"} spacing={8} align={"center"}>
-{NAV_ITEMS.map((navItem, index) => (
-  <Box key={`nav-item-${index}`}> {/* Add an explicit unique key */}
-    <Popover trigger={"hover"} placement={"bottom-start"}>
-      <PopoverTrigger>
-        <Box
-          as="a"
-          p={4}
-          href={navItem.href ?? "#"}
-          fontSize={"md"}
-          fontWeight={600}
-          color={useColorModeValue("gray.600", "gray.200")}
-          _hover={{
-            textDecoration: "underline",
-            color: useColorModeValue("pink.400", "pink.200"),
-            transform: "scale(1.05)",
-            transition: "all 0.3s ease",
-          }}
-        >
-          {navItem.label}
-        </Box>
-      </PopoverTrigger>
-      {navItem.children && (
-        <PopoverContent
-          border={0}
-          boxShadow={"xl"}
-          bg={useColorModeValue("white", "gray.800")}
-          p={4}
-          rounded={"xl"}
-          minW={"sm"}
-        >
-          <Stack>
-            {navItem.children.map((child, childIndex) => (
-              <DesktopSubNav key={`subnav-item-${childIndex}`} {...child} />
-            ))}
-          </Stack>
-        </PopoverContent>
-      )}
-    </Popover>
-  </Box>
-))}
+    <Menu>
+      <Stack
+        direction="row"
+        spacing={6}
+        align="center"
+        px={6}
+        py={3}
+        bg="rgba(255, 255, 255, 0.1)" // Transparent effect
+        backdropFilter="blur(10px)" // Glassmorphism effect
+        borderRadius="xl"
+        boxShadow="lg"
+      >
+        {NAV_ITEMS.map((navItem, index) => (
+          <Box key={`nav-item-${index}`}>
+            <Popover trigger="hover" placement="bottom-start">
+              <PopoverTrigger>
+                <MenuButton
+                  as={Button}
+                  colorScheme="pink"
+                  variant="ghost"
+                  fontSize="lg"
+                  fontWeight="bold"
+                  color="purple.300"
+                  _hover={{
+                    textDecoration: "none",
+                    color: "purple.400",
+                    transform: "scale(1.1)",
+                    transition: "all 0.2s ease-in-out",
+                  }}
+                  rightIcon={<ChevronDownIcon />}
+                >
+                  {navItem.label}
+                </MenuButton>
+              </PopoverTrigger>
 
-    </Stack>
+              {navItem.children && (
+                <PopoverContent
+                  border={0}
+                  boxShadow="xl"
+                  bg={useColorModeValue("whiteAlpha.900", "gray.800")}
+                  p={4}
+                  rounded="xl"
+                  minW="sm"
+                >
+                  <Stack spacing={2}>
+                    {navItem.children.map((child, childIndex) => (
+                      <Button
+                        key={`subnav-item-${childIndex}`}
+                        as="a"
+                        href={child.href}
+                        variant="ghost"
+                        justifyContent="flex-start"
+                        fontSize="md"
+                        _hover={{
+                          bg: "pink.100",
+                          color: "pink.500",
+                          transform: "scale(1.05)",
+                        }}
+                      >
+                        {child.label}
+                      </Button>
+                    ))}
+                  </Stack>
+                </PopoverContent>
+              )}
+            </Popover>
+          </Box>
+        ))}
+        
+      </Stack>
+    </Menu>
   );
 };
 
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   return (
-    <Box
-      as="a"
-      href={href}
-      role={"group"}
-      display={"block"}
-      p={2}
-      rounded={"md"}
-      _hover={{ bg: useColorModeValue("pink.50", "gray.900") }}
+    <Menu
+    // as="a"
+    // href={href}
+    // role={"group"}
+    // display={"block"}
+    // p={2}
+    // rounded={"md"}
+    // _hover={{ bg: useColorModeValue("pink.50", "gray.900") }}
     >
-      <Stack direction={"row"} align={"center"}>
-        <Box>
-          <Text
+      {/* <Stack direction={"row"} align={"center"}> */}
+      <MenuButton as={Button} colorScheme="pink">
+        {/* <Text
             transition={"all .3s ease"}
             _groupHover={{ color: "pink.400" }}
             fontWeight={500}
-          >
-            {label}
-          </Text>
-          <Text fontSize={"sm"}>{subLabel}</Text>
-        </Box>
-        <Flex
+          > */}
+        {label}
+        {/* </Text> */}
+      </MenuButton>
+      <MenuList>
+        <Text fontSize={"sm"}>{subLabel}</Text>
+      </MenuList>
+
+      {/* <Flex
           transition={"all .3s ease"}
           transform={"translateX(-10px)"}
           opacity={0}
@@ -237,9 +334,9 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
           flex={1}
         >
           <Icon color={"pink.400"} w={5} h={5} as={ChevronRightIcon} />
-        </Flex>
-      </Stack>
-    </Box>
+        </Flex> */}
+      {/* </Stack> */}
+    </Menu>
   );
 };
 
@@ -259,7 +356,7 @@ const MobileNav = () => {
 
 const MobileNavItem = ({ label, children, href }: NavItem) => {
   const { isOpen, onToggle } = useDisclosure();
-  console.log({label})
+  console.log({ label });
 
   return (
     <Stack spacing={4} onClick={children && onToggle}>
@@ -273,12 +370,16 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
           textDecoration: "none",
         }}
       >
-        {typeof label === "string" ? <Text
-          fontWeight={600}
-          color={useColorModeValue("gray.600", "gray.200")}
-        >
-          {label}
-        </Text> : <Box>{label}</Box>}
+        {typeof label === "string" ? (
+          <Text
+            fontWeight={600}
+            color={useColorModeValue("gray.600", "gray.200")}
+          >
+            {label}
+          </Text>
+        ) : (
+          <Box>{label}</Box>
+        )}
         {children && (
           <Icon
             as={ChevronDownIcon}
@@ -301,7 +402,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         >
           {children &&
             children.map((child, key) => (
-              <Box as="a"  py={2} key={key} href={child.href}>
+              <Box as="a" py={2} key={key} href={child.href}>
                 {child.label}
               </Box>
             ))}
