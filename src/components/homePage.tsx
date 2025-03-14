@@ -53,7 +53,6 @@ const Card = ({ heading, description, icon, href }: CardProps) => {
           justify={"center"}
           color={"white"}
           rounded={"full"}
-          bg={useColorModeValue("gray.100", "gray.700")}
         >
           {icon}
         </Flex>
@@ -71,7 +70,7 @@ const Card = ({ heading, description, icon, href }: CardProps) => {
   );
 };
 
-export default function gridListWith() {
+export default function GridListWith() {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
@@ -107,8 +106,8 @@ export default function gridListWith() {
           maxW="9xl"
           mt={12}
           p={6}
-          bg="purple.300"
-          // bg="grey.800"
+          // bg="purple.300"
+          bg="grey.800"
           borderRadius="lg"
           boxShadow="base"
           // bg="grey.800"
@@ -129,7 +128,7 @@ export default function gridListWith() {
             >
               <iframe
                 title="Is it Tru 1"
-                src="https://www.youtube.com/embed/rA06WkDgIfM"
+                src="https://www.youtube.com/embed/ahNtp1dvrpg"
                 allowFullScreen
               />
             </AspectRatio>
@@ -180,7 +179,8 @@ export default function gridListWith() {
             >
               <iframe
                 title="Is it Tru 1"
-                src="https://www.youtube.com/embed/Ub35MBQXKGI"
+                src="https://www.youtube.com/embed/Ui_4G1v1xeA"
+                // Ui_4G1v1xeA
                 allowFullScreen
               />
             </AspectRatio>
@@ -210,7 +210,7 @@ export default function gridListWith() {
             >
               <iframe
                 title="Is it Tru 1"
-                src="https://www.youtube.com/embed/ahNtp1dvrpg"
+                src="https://www.youtube.com/embed/Ui_4G1v1xeA"
                 allowFullScreen
               />
             </AspectRatio>

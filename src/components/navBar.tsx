@@ -135,9 +135,9 @@ export default function WithSubnavigation() {
 
               <Image
                 src={user.photoURL || ""}
-                boxSize="55px"
+                boxSize="50"
                 borderRadius="full"
-                objectFit="cover"
+                // objectFit="cover"
                 alt={user.displayName || "User Avatar"}
                 mr={100}
                 // ml="auto"
@@ -466,9 +466,9 @@ const NAV_ITEMS: Array<NavItem> = [
       <Box
         p={2}
         fontSize={"2xl"}
-        color={("purple.600", "purple.300")}
+        color={("purple.300")}
         _hover={{
-          color: ("pink.400", "pink.200"),
+          color: ("pink.200"),
           transform: "scale(1.2)",
           transition: "all 0.3s ease",
         }}

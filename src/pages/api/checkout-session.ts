@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               images: ["your-image-url"], // Optional
               metadata: { downloadUrl: beatUrl },
             },
-            unit_amount: 1000, // Set price in cents (e.g., $10)
+            unit_amount: 2000, // Set price in cents (e.g., $10)
           },
           quantity: 1,
         },
