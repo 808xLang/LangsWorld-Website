@@ -1,32 +1,38 @@
 import { useEffect, useState, useRef } from "react";
 import { auth, storage } from "../components/googleSignin/config";
-import { ref, listAll, getDownloadURL } from "firebase/storage";
+import { ref, listAll, getDownloadURL, getStorage } from "firebase/storage";
+
 
 import "../styles/ViewBeats.css";
 import { Button, MenuButton } from "@chakra-ui/react";
 
 export default function ViewBeats() {
-  const [audioList, setAudioList] = useState<string[]>([]);
+  const [beats, setBeats] = useState<{ name: string; url: string }[]>([]);
   const audioListRef = ref(storage, "audio/");
   const currentAudioRef = useRef<HTMLAudioElement | null>(null); // Tracks the currently playing audio
 
   useEffect(() => {
-    const fetchAudioUrls = async () => {
+    const fetchAudioFiles = async () => {
       try {
-        const response = await listAll(audioListRef); //Making a var for response and using the listall function from firebase list using the audiListRef
-        const urlPromises = response.items.map((item) => getDownloadURL(item));
+        const response = await listAll(audioListRef); // Get all files in "audio/" folder
+        
+        const files = await Promise.all(
+          response.items.map(async (item) => {
+            const url = await getDownloadURL(item); // Get the download URL
+            return { name: item.name, url }; // Store both the file name and URL
+          })
+        );
 
-        const urlList = await Promise.all(urlPromises);
-        console.log({urlList})
-        setAudioList(urlList);
+        setBeats(files); // Update state with file names and URLs
       } catch (error) {
-        console.error("Error fetching audio URLs:", error);
+        console.error("Error fetching audio files:", error);
       }
     };
 
-    fetchAudioUrls();
+    fetchAudioFiles();
   }, []);
 
+ 
   const handlePlay = (event: React.SyntheticEvent<HTMLAudioElement>) => {
     // Pause the currently playing audio (if any)
     if (currentAudioRef.current && currentAudioRef.current !== event.target) {
@@ -37,6 +43,9 @@ export default function ViewBeats() {
     // Update the reference to the new playing audio
     currentAudioRef.current = event.target as HTMLAudioElement;
   };
+
+  
+
 
   const handlePurchase = async (beatUrl: string, beatName: string) => {
     const user = auth.currentUser;
@@ -51,7 +60,7 @@ export default function ViewBeats() {
       body: JSON.stringify({ beatUrl, beatName, userEmail: user.email }),
     });
 
-    console.log("Response Data:", {beatUrl});
+    console.log("Response Data:", {beatName});
   
     const data = await response.json();
   
@@ -69,17 +78,15 @@ export default function ViewBeats() {
 
   return (
     <div>
-
       <ul className="playlist">
-        {audioList.map((url, index) => (
+        {beats.map((beat, index) => (
           <li className="playlistItem" key={index}>
             <div className="audioInfo">
-              <span>Monkey {index + 1}</span>
+              <span>{beat.name}</span> {/* Displays the file name from Firebase */}
               <audio controls onPlay={handlePlay} controlsList="nodownload" onContextMenu={(e) => e.preventDefault()}>
-                <source src={url} type="audio/mp3" />
+                <source src={beat.url} type="audio/mp3" />
               </audio>
-              <Button onClick={() => handlePurchase(url, `Beat ${index + 1}`)} border='2px'
-  borderColor='purple.500'>
+              <Button onClick={() => handlePurchase(beat.url, beat.name)} border="2px" borderColor="purple.500">
                 Buy Now
               </Button>
             </div>

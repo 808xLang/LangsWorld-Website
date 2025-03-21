@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import { getAuth, User } from "firebase/auth";
-import { storage } from "../components/googleSignin/config";
+import { storage, db } from "../components/googleSignin/config";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { collection, addDoc } from "firebase/firestore";
 import { v4 } from "uuid";
+
+
+
+
+import { Button, MenuButton } from "@chakra-ui/react";
 
 export default function UploadBeat() {
   const [audioUpload, setAudioUpload] = useState<File | null>(null);
-  const [beatName, setBeatName] = useState(""); // ✅ New state for beat name
+  const [beatName, setBeatName] = useState(""); // state for beat name
   const [message, setMessage] = useState("");
   const [audioList, setAudioList] = useState<string[]>([]);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -28,26 +34,35 @@ export default function UploadBeat() {
     });
   }, [auth]);
 
-  const uploadAudio = () => {
-    if (!audioUpload || !beatName.trim() || !isAdmin) {
+  const uploadAudio = async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+  
+    if (!user) {
+      setMessage("You must be logged in to upload a beat.");
+      return;
+    }
+  
+    if (!audioUpload || !beatName.trim()) {
       setMessage("Please select a file and enter a name before uploading.");
       return;
     }
+  
+    const audioRef = ref(storage, `audio/${beatName}.mp3`);
 
-    // ✅ Use beatName instead of file name + UUID for uniqueness
-    const audioRef = ref(storage, `audio/${beatName}-${v4()}.mp3`);
-
-    uploadBytes(audioRef, audioUpload)
-      .then(() => {
-        setMessage("Audio Uploaded Successfully!");
-        setBeatName(""); // Clear input
-        setAudioUpload(null);
-      })
-      .catch((error) => {
-        console.error("Error uploading file:", error);
-        setMessage("Error uploading file. Please try again.");
-      });
-  };
+  
+    try {
+      await uploadBytes(audioRef, audioUpload);
+      const downloadURL = await getDownloadURL(audioRef);
+  
+      setMessage("Audio Uploaded Successfully!");
+      setBeatName("");
+      setAudioUpload(null);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      setMessage("Error uploading file. Please try again.");
+    }
+  }
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAudioUpload(event.target.files ? event.target.files[0] : null);
@@ -85,7 +100,7 @@ export default function UploadBeat() {
         onChange={(e) => setBeatName(e.target.value)} 
       />
       <input type="file" accept="audio/mpeg" onChange={handleFileChange} />
-      <button onClick={uploadAudio}>Upload MP3</button>
+      <Button onClick={uploadAudio}>Upload MP3</Button>
       {message && <p>{message}</p>}
 
       {audioList.map((url, index) => (
