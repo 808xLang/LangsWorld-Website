@@ -4,7 +4,7 @@ import { createContext, useEffect, useState, ReactNode } from "react";
 import { useRouter } from "next/router";
 import { auth } from "../components/googleSignin/config"; // Ensure you have the correct path
 import { FaInstagram, FaSoundcloud } from "react-icons/fa";
-import { ColorModeScript, useColorMode } from '@chakra-ui/react';
+import { ColorModeScript, useColorMode } from "@chakra-ui/react";
 
 import {
   Box,
@@ -53,7 +53,7 @@ export default function WithSubnavigation() {
   const [user, setUser] = useState<User | null>(null); // State to track user login status
   // const btnRef = React.useRef()
   // Use useEffect to listen for authentication state changes
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode, toggleColorMode } = useColorMode();
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser); // Update user state on login or logout
@@ -61,21 +61,24 @@ export default function WithSubnavigation() {
     return () => unsubscribe(); // Clean up the listener
   }, []);
 
+  const bgColor = useColorModeValue(
+    "linear-gradient(90deg, rgba(134, 182, 255, 1) 50%, rgba(189, 147, 249, 1) 100%)",
+    "gray.800"
+  );
+
+  const bgShadow = useColorModeValue("gray.200", "gray.900");
+
   return (
     <Box>
       <Flex
-        bg={useColorModeValue(
-          "linear-gradient(90deg, rgba(134, 182, 255, 1) 50%, rgba(189, 147, 249, 1) 100%)",
-          "gray.800"
-        )}
-        color={useColorModeValue("gray.600", "white")}
+        bg={bgColor}
         boxShadow="md"
         minH={"80px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={3}
         borderStyle={"solid"}
-        borderColor={useColorModeValue("gray.200", "gray.900")}
+        borderColor={bgShadow}
         align={"center"}
         justify="space-between"
         w="100%"
@@ -223,6 +226,7 @@ const DesktopNav = () => {
   const linkColor = useColorModeValue("gray.600", "gray.200");
   const linkHoverColor = useColorModeValue("gray.800", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
+  const bgShadow = useColorModeValue("gray.200", "gray.900");
 
   return (
     <Menu>
@@ -264,7 +268,7 @@ const DesktopNav = () => {
                 <PopoverContent
                   border={0}
                   boxShadow="xl"
-                  bg={useColorModeValue("whiteAlpha.900", "gray.800")}
+                  bg={bgShadow}
                   p={4}
                   rounded="xl"
                   minW="sm"
@@ -293,7 +297,6 @@ const DesktopNav = () => {
             </Popover>
           </Box>
         ))}
-        
       </Stack>
     </Menu>
   );
@@ -341,9 +344,10 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
 };
 
 const MobileNav = () => {
+  const bgShadow = useColorModeValue("gray.200", "gray.900");
   return (
     <Stack
-      bg={useColorModeValue("white", "gray.800")}
+      bg={bgShadow}
       p={4}
       display={{ md: "none" }}
     >
@@ -355,6 +359,8 @@ const MobileNav = () => {
 };
 
 const MobileNavItem = ({ label, children, href }: NavItem) => {
+  const bgShadow = useColorModeValue("gray.200", "gray.900");
+
   const { isOpen, onToggle } = useDisclosure();
   console.log({ label });
 
@@ -373,7 +379,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         {typeof label === "string" ? (
           <Text
             fontWeight={600}
-            color={useColorModeValue("gray.600", "gray.200")}
+            color={bgShadow}
           >
             {label}
           </Text>
@@ -397,7 +403,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
           pl={4}
           borderLeft={1}
           borderStyle={"solid"}
-          borderColor={useColorModeValue("gray.200", "gray.700")}
+          borderColor={bgShadow}
           align={"start"}
         >
           {children &&
@@ -466,9 +472,9 @@ const NAV_ITEMS: Array<NavItem> = [
       <Box
         p={2}
         fontSize={"2xl"}
-        color={("purple.300")}
+        color={"purple.300"}
         _hover={{
-          color: ("pink.200"),
+          color: "pink.200",
           transform: "scale(1.2)",
           transition: "all 0.3s ease",
         }}

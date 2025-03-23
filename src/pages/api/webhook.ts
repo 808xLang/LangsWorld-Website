@@ -5,7 +5,7 @@ import { db } from "../../components/googleSignin/config"; // Firestore setup
 import { doc, setDoc, Timestamp } from "firebase/firestore";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: "2025-01-27.acacia",
+  apiVersion: "2025-02-24.acacia",
 });
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
