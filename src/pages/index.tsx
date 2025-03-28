@@ -12,7 +12,7 @@ const Home: React.FC = () => {
         <ChakraProvider>
             
             <Tapes/>
-            <Homepage/>
+            {/* <Homepage/> */}
             {/* <Calender/> */}
         </ChakraProvider>
     )
