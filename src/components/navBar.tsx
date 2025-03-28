@@ -45,14 +45,14 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
-import { User } from "firebase/auth";
+import { signOut, User } from "firebase/auth";
 
 export default function WithSubnavigation() {
-  const { isOpen, onToggle, onClose } = useDisclosure();
+  const mobileNav = useDisclosure(); // Controls the mobile navigation
+  const profileDrawer = useDisclosure(); // Controls the user profile drawer
+  // const { isOpen, onToggle, onClose } = useDisclosure();
   // const { drawerOpen, draweronOpen, draweronClose } = useDisclosure();
   const [user, setUser] = useState<User | null>(null); // State to track user login status
-  // const btnRef = React.useRef()
-  // Use useEffect to listen for authentication state changes
   const { colorMode, toggleColorMode } = useColorMode();
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
@@ -60,6 +60,8 @@ export default function WithSubnavigation() {
     });
     return () => unsubscribe(); // Clean up the listener
   }, []);
+
+  const router = useRouter();
 
   const bgColor = useColorModeValue(
     "linear-gradient(90deg, rgba(134, 182, 255, 1) 50%, rgba(189, 147, 249, 1) 100%)",
@@ -71,7 +73,10 @@ export default function WithSubnavigation() {
   return (
     <Box>
       <Flex
+        position="fixed"
+        top="0"
         bg={bgColor}
+        zIndex={1000}
         boxShadow="md"
         minH={"80px"}
         py={{ base: 2 }}
@@ -89,12 +94,17 @@ export default function WithSubnavigation() {
           display={{ base: "flex", md: "none" }}
         >
           <IconButton
-            onClick={onToggle}
+            onClick={mobileNav.onToggle} // Opens only the mobile nav
             icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
+              mobileNav.isOpen ? (
+                <CloseIcon w={3} h={3} />
+              ) : (
+                <HamburgerIcon w={5} h={5} />
+              )
             }
-            variant={"ghost"}
-            aria-label={"Toggle Navigation"}
+            variant="ghost"
+            aria-label="Toggle Navigation"
+            display={{ base: "flex", md: "none" }}
           />
         </Flex>
         <Flex
@@ -145,58 +155,42 @@ export default function WithSubnavigation() {
                 mr={100}
                 // ml="auto"
                 cursor="pointer"
-                onClick={onToggle}
+                onClick={profileDrawer.onToggle}
                 _hover={{
                   transform: "scale(1.2)",
                   transition: "0.2s ease-in-out",
                 }}
               />
               <Drawer
-                isOpen={isOpen}
+                isOpen={profileDrawer.isOpen}
                 placement="right"
-                onClose={onClose}
-                // finalFocusRef={btnRef}
+                onClose={profileDrawer.onClose}
               >
                 <DrawerOverlay />
                 <DrawerContent>
                   <DrawerHeader>
-                    <Flex>
-                      <Image
-                        src={user.photoURL || ""}
-                        w="100%"
-                        maxW="200px" // Prevents it from getting too wide
-                        h="auto"
-                        objectFit="cover"
-                        mx="auto"
-                        display="block"
-                      />
-                    </Flex>
+                    <Image
+                      src={user.photoURL || ""}
+                      w="100%"
+                      maxW="200px"
+                      mx="auto"
+                      display="block"
+                    />
                   </DrawerHeader>
                   <DrawerFooter>
                     <Button
                       variant="outline"
-                      fontSize={"md"}
-                      // fontWeight={400}
-                      // variant={"link"}
-                      onClick={() => auth.signOut()}
+                      fontSize="md"
+                      onClick={async () => {
+                        await auth.signOut();
+                        router.push("/");
+                      }}
                     >
                       Sign Out
                     </Button>
                   </DrawerFooter>
                 </DrawerContent>
               </Drawer>
-
-              {/* <Button fontSize={"sm"} fontWeight={400} variant={"link"}>
-                {user.displayName}
-              </Button> */}
-              {/* <Button
-                fontSize={"md"}
-                // fontWeight={400}
-                variant={"link"}
-                onClick={() => auth.signOut()}
-              >
-                Sign Out
-              </Button> */}
             </>
           ) : (
             // Show "Sign In" and "Create an Account" buttons when not logged in
@@ -215,10 +209,12 @@ export default function WithSubnavigation() {
         </Stack>
       </Flex>
 
-      <Collapse in={isOpen} animateOpacity>
+      <Collapse in={mobileNav.isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
+      <Box h="110px"/>
     </Box>
+    
   );
 }
 
@@ -245,7 +241,7 @@ const DesktopNav = () => {
           <Box key={`nav-item-${index}`}>
             <Popover trigger="hover" placement="bottom-start">
               <PopoverTrigger>
-                <MenuButton
+                <Button
                   as={Button}
                   colorScheme="pink"
                   variant="ghost"
@@ -258,10 +254,10 @@ const DesktopNav = () => {
                     transform: "scale(1.1)",
                     transition: "all 0.2s ease-in-out",
                   }}
-                  rightIcon={<ChevronDownIcon />}
+                  // rightIcon={<ChevronDownIcon />}
                 >
                   {navItem.label}
-                </MenuButton>
+                </Button>
               </PopoverTrigger>
 
               {navItem.children && (
@@ -326,19 +322,6 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
       <MenuList>
         <Text fontSize={"sm"}>{subLabel}</Text>
       </MenuList>
-
-      {/* <Flex
-          transition={"all .3s ease"}
-          transform={"translateX(-10px)"}
-          opacity={0}
-          _groupHover={{ opacity: "100%", transform: "translateX(0)" }}
-          justify={"flex-end"}
-          align={"center"}
-          flex={1}
-        >
-          <Icon color={"pink.400"} w={5} h={5} as={ChevronRightIcon} />
-        </Flex> */}
-      {/* </Stack> */}
     </Menu>
   );
 };
@@ -346,11 +329,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
 const MobileNav = () => {
   const bgShadow = useColorModeValue("gray.200", "gray.900");
   return (
-    <Stack
-      bg={bgShadow}
-      p={4}
-      display={{ md: "none" }}
-    >
+    <Stack bg={bgShadow} p={4} display={{ md: "none" }}>
       {NAV_ITEMS.map((navItem, key) => (
         <MobileNavItem {...navItem} key={key} />
       ))}
@@ -377,10 +356,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         }}
       >
         {typeof label === "string" ? (
-          <Text
-            fontWeight={600}
-            color={bgShadow}
-          >
+          <Text fontWeight={600} color={bgShadow}>
             {label}
           </Text>
         ) : (
@@ -399,6 +375,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
 
       <Collapse in={isOpen} animateOpacity style={{ marginTop: "0!important" }}>
         <Stack
+        position="absolute"
           mt={2}
           pl={4}
           borderLeft={1}
@@ -449,11 +426,6 @@ const NAV_ITEMS: Array<NavItem> = [
         label: "Book a session",
         subLabel: "Book a session",
         href: "/calendar",
-      },
-      {
-        label: "Freelance Projects",
-        subLabel: "An exclusive list for contract work",
-        href: "#",
       },
     ],
   },

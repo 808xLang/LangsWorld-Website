@@ -6,6 +6,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import '../styles/Calendar.css';
 import { INTERVAL, STORE_CLOSING_TIME, STORE_OPENING_TIME } from "../components/constants/config";
+import { Center } from "@chakra-ui/react";
 
 interface indexProps {}
 interface DateType {
@@ -43,6 +44,9 @@ const Calender: FC<indexProps> = ({}) => {
 
   return (
     <div className="h-screen flex flex-col justify-center items-center">
+    <Center bg='tomato' h='100px' color='white'>
+  Under Construction
+</Center>
       {/* when a date is picked it pulls up a time using this ternary operator */}
       {date.justDate ? (
         <div className="flex gap-4">
