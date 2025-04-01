@@ -1,5 +1,5 @@
 import Navbar from './navBar';
-import Homepage from './homePage'
+import Homepage from '../pages/homePage'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

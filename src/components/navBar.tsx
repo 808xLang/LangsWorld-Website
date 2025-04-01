@@ -50,7 +50,7 @@ import { signOut, User } from "firebase/auth";
 export default function WithSubnavigation() {
   const mobileNav = useDisclosure(); // Controls the mobile navigation
   const profileDrawer = useDisclosure(); // Controls the user profile drawer
-  // const { isOpen, onToggle, onClose } = useDisclosure();
+  const { isOpen, onToggle, onClose } = useDisclosure();
   // const { drawerOpen, draweronOpen, draweronClose } = useDisclosure();
   const [user, setUser] = useState<User | null>(null); // State to track user login status
   const { colorMode, toggleColorMode } = useColorMode();
@@ -340,6 +340,11 @@ const MobileNav = () => {
 const MobileNavItem = ({ label, children, href }: NavItem) => {
   const bgShadow = useColorModeValue("gray.200", "gray.900");
 
+  const igLink = "https://www.instagram.com/808lang/"
+  const igDownload = () => {
+    window.open(igLink, "_blank")
+  }
+
   const { isOpen, onToggle } = useDisclosure();
   console.log({ label });
 
@@ -372,24 +377,13 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
           />
         )}
       </Box>
-
-      <Collapse in={isOpen} animateOpacity style={{ marginTop: "0!important" }}>
-        <Stack
-        position="absolute"
-          mt={2}
-          pl={4}
-          borderLeft={1}
-          borderStyle={"solid"}
-          borderColor={bgShadow}
-          align={"start"}
-        >
+      <Collapse startingHeight={5} in={isOpen} animateOpacity>
           {children &&
             children.map((child, key) => (
               <Box as="a" py={2} key={key} href={child.href}>
                 {child.label}
               </Box>
             ))}
-        </Stack>
       </Collapse>
     </Stack>
   );
@@ -420,22 +414,12 @@ const NAV_ITEMS: Array<NavItem> = [
     ],
   },
   {
-    label: "Book a session",
+    label: "Videos",
     children: [
       {
-        label: "Book a session",
+        label: "LangsWorld Videos",
         subLabel: "Book a session",
-        href: "/calendar",
-      },
-    ],
-  },
-  {
-    label: "DrumKits",
-    children: [
-      {
-        label: "Loops",
-        subLabel: "Custom Loops Made by 808Lang",
-        href: "/Collabs",
+        href: "/homePage",
       },
     ],
   },

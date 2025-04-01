@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from '../components/navBar';
-import Homepage from '../components/homePage'
+import Homepage from './homePage'
 import Calender from './calendar';
 import Tapes from './tapes'
 
