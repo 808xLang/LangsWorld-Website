@@ -85,7 +85,7 @@ export default function UploadBeat() {
       .catch((error) => {
         console.error("Error listing all files:", error);
       });
-  }, []);
+  },);
 
   if (!isAdmin) {
     return <p>Access denied: You do not have permission to upload files.</p>;

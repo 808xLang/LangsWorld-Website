@@ -53,7 +53,7 @@ export default function ViewBeats() {
     };
 
     fetchAudioFiles();
-  }, [user]); // ✅ Fetch only when user is available
+  }); // ✅ Fetch only when user is available
 
   const handlePlay = (event: React.SyntheticEvent<HTMLAudioElement>) => {
     if (currentAudioRef.current && currentAudioRef.current !== event.target) {

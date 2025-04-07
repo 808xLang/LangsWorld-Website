@@ -171,6 +171,7 @@ export default function WithSubnavigation() {
                   <DrawerHeader>
                     <Image
                       src={user.photoURL || ""}
+                      alt={user.displayName || "User Avatar"}
                       w="100%"
                       maxW="200px"
                       mx="auto"
