@@ -212,9 +212,8 @@ export default function WithSubnavigation() {
       <Collapse in={mobileNav.isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
-      <Box h="110px"/>
+      <Box h="110px" />
     </Box>
-    
   );
 }
 
@@ -239,28 +238,39 @@ const DesktopNav = () => {
       >
         {NAV_ITEMS.map((navItem, index) => (
           <Box key={`nav-item-${index}`}>
-            <Popover trigger="hover" placement="bottom-start">
-              <PopoverTrigger>
-                <Button
-                  as={Button}
-                  colorScheme="pink"
-                  variant="ghost"
-                  fontSize="lg"
-                  fontWeight="bold"
-                  color="purple.300"
-                  _hover={{
-                    textDecoration: "none",
-                    color: "purple.400",
-                    transform: "scale(1.1)",
-                    transition: "all 0.2s ease-in-out",
-                  }}
-                  // rightIcon={<ChevronDownIcon />}
-                >
-                  {navItem.label}
-                </Button>
-              </PopoverTrigger>
+            {/* <Popover 
+            // trigger="hover" placement="bottom-start"
+            > */}
+              {/* <PopoverTrigger> */}
+              <Button
+                colorScheme="pink"
+                variant="ghost"
+                fontSize="lg"
+                fontWeight="bold"
+                as="a"
+                href={navItem.href}
+                color="purple.300"
+                _hover={{
+                  textDecoration: "none",
+                  color: "purple.400",
+                  bg: "whiteAlpha.100", // subtle background on hover
+                  transform: "scale(1.05)",
+                  boxShadow: "md",
+                  transition: "all 0.2s ease-in-out",
+                }}
+                _active={{
+                  transform: "scale(0.97)",
+                  boxShadow: "sm",
+                }}
+                _focus={{
+                  boxShadow: "outline",
+                }}
+              >
+                {navItem.label}
+              </Button>
+              {/* </PopoverTrigger> */}
 
-              {navItem.children && (
+              {/* {navItem.children && (
                 <PopoverContent
                   border={0}
                   boxShadow="xl"
@@ -289,8 +299,8 @@ const DesktopNav = () => {
                     ))}
                   </Stack>
                 </PopoverContent>
-              )}
-            </Popover>
+              )} */}
+            {/* </Popover> */}
           </Box>
         ))}
       </Stack>
@@ -340,10 +350,10 @@ const MobileNav = () => {
 const MobileNavItem = ({ label, children, href }: NavItem) => {
   const bgShadow = useColorModeValue("gray.200", "gray.900");
 
-  const igLink = "https://www.instagram.com/808lang/"
+  const igLink = "https://www.instagram.com/808lang/";
   const igDownload = () => {
-    window.open(igLink, "_blank")
-  }
+    window.open(igLink, "_blank");
+  };
 
   const { isOpen, onToggle } = useDisclosure();
   console.log({ label });
@@ -378,12 +388,12 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         )}
       </Box>
       <Collapse startingHeight={5} in={isOpen} animateOpacity>
-          {children &&
-            children.map((child, key) => (
-              <Box as="a" py={2} key={key} href={child.href}>
-                {child.label}
-              </Box>
-            ))}
+        {children &&
+          children.map((child, key) => (
+            <Box as="a" py={2} key={key} href={child.href}>
+              {child.label}
+            </Box>
+          ))}
       </Collapse>
     </Stack>
   );
@@ -400,21 +410,23 @@ interface NavItem {
 const NAV_ITEMS: Array<NavItem> = [
   {
     label: "Beats",
-    children: [
-      {
-        label: "Gallery",
-        subLabel: "Beats (Must be signed in)",
-        href: "/BeatGallery",
-      },
-      {
-        label: "Upload Beats",
-        subLabel: "Upload beats (Need Admin access)",
-        href: "/uploadBeats",
-      },
-    ],
+    href: "/BeatGallery",
+    // children: [
+    //   {
+    //     label: "Gallery",
+    //     subLabel: "Beats (Must be signed in)",
+    //     href: "/BeatGallery",
+    //   },
+    //   {
+    //     label: "Upload Beats",
+    //     subLabel: "Upload beats (Need Admin access)",
+    //     href: "/uploadBeats",
+    //   },
+    // ],
   },
   {
     label: "Videos",
+    href: "/homePage",
     children: [
       {
         label: "LangsWorld Videos",
@@ -425,16 +437,7 @@ const NAV_ITEMS: Array<NavItem> = [
   },
   {
     label: (
-      <Box
-        p={2}
-        fontSize={"2xl"}
-        color={"purple.300"}
-        _hover={{
-          color: "pink.200",
-          transform: "scale(1.2)",
-          transition: "all 0.3s ease",
-        }}
-      >
+      <Box p={2} fontSize={"3xl"}>
         <FaInstagram />
       </Box>
     ), // Add padding and adjust font size
