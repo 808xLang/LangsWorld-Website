@@ -35,6 +35,7 @@ export default function ViewBeats() {
   }, [router]); // ✅ Depend on router
 
   useEffect(() => {
+    //This runs as soon as the page loads because its useEffect :)
     if (!user) return; // ✅ Don't fetch files if not logged in
 
     const fetchAudioFiles = async () => {

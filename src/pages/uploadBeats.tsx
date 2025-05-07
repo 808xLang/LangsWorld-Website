@@ -13,6 +13,7 @@ import { Button, MenuButton } from "@chakra-ui/react";
 export default function UploadBeat() {
   const [audioUpload, setAudioUpload] = useState<File | null>(null);
   const [beatName, setBeatName] = useState(""); // state for beat name
+  const [tapeName, setTapeName] = useState(""); // state for Tape name
   const [message, setMessage] = useState("");
   const [audioList, setAudioList] = useState<string[]>([]);
   const [isAdmin, setIsAdmin] = useState(false);

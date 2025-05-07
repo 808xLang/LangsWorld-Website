@@ -269,39 +269,7 @@ const DesktopNav = () => {
               >
                 {navItem.label}
               </Button>
-              {/* </PopoverTrigger> */}
-
-              {/* {navItem.children && (
-                <PopoverContent
-                  border={0}
-                  boxShadow="xl"
-                  bg={bgShadow}
-                  p={4}
-                  rounded="xl"
-                  minW="sm"
-                >
-                  <Stack spacing={2}>
-                    {navItem.children.map((child, childIndex) => (
-                      <Button
-                        key={`subnav-item-${childIndex}`}
-                        as="a"
-                        href={child.href}
-                        variant="ghost"
-                        justifyContent="flex-start"
-                        fontSize="md"
-                        _hover={{
-                          bg: "pink.100",
-                          color: "pink.500",
-                          transform: "scale(1.05)",
-                        }}
-                      >
-                        {child.label}
-                      </Button>
-                    ))}
-                  </Stack>
-                </PopoverContent>
-              )} */}
-            {/* </Popover> */}
+              
           </Box>
         ))}
       </Stack>
@@ -411,30 +379,12 @@ interface NavItem {
 const NAV_ITEMS: Array<NavItem> = [
   {
     label: "Beats",
-    href: "/BeatGallery",
-    // children: [
-    //   {
-    //     label: "Gallery",
-    //     subLabel: "Beats (Must be signed in)",
-    //     href: "/BeatGallery",
-    //   },
-    //   {
-    //     label: "Upload Beats",
-    //     subLabel: "Upload beats (Need Admin access)",
-    //     href: "/uploadBeats",
-    //   },
-    // ],
+    href: "/beats",
   },
   {
     label: "Videos",
-    href: "/homePage",
-    children: [
-      {
-        label: "LangsWorld Videos",
-        subLabel: "Book a session",
-        href: "/homePage",
-      },
-    ],
+    href: "/videos",
+
   },
   {
     label: (
