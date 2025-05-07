@@ -10,7 +10,9 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import Slider from "react-slick";
-import { FaApple, FaSpotify, FaSoundcloud, FaYoutube } from "react-icons/fa";
+import { FaApple, FaSpotify, FaSoundcloud, FaYoutube} from "react-icons/fa";
+import { FaCircleArrowLeft, FaCircleArrowRight, } from "react-icons/fa6";
+
 
 const albums = [
   {
@@ -70,7 +72,7 @@ export default function ViewTapes() {
         color="white"
         cursor="pointer"
       >
-        ▶
+        <FaCircleArrowRight />
       </Box>
     );
   };
@@ -90,7 +92,7 @@ export default function ViewTapes() {
         color="white"
         cursor="pointer"
       >
-        ◀
+        <FaCircleArrowLeft />
       </Box>
     );
   };
