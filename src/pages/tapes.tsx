@@ -8,11 +8,11 @@ import {
   useColorModeValue,
   HStack,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
-import { FaApple, FaSpotify, FaSoundcloud, FaYoutube} from "react-icons/fa";
-import { FaCircleArrowLeft, FaCircleArrowRight, } from "react-icons/fa6";
-
+import { FaApple, FaSpotify, FaSoundcloud, FaYoutube } from "react-icons/fa";
+import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
+import SwipeHint from "../Tapes/swipe";
 
 const albums = [
   {
@@ -41,7 +41,9 @@ const albums = [
 export default function ViewTapes() {
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
 
-  const [currentSlide, setCurrentSlide] = useState(0);//Handles the current slide index for the slider
+  const [currentSlide, setCurrentSlide] = useState(0); //Handles the current slide index for the
+  const [windowWidth, setWindowWidth] = useState(0);
+  const [visibleSlides, setVisibleSlides] = useState(3);
 
   const handlePlay = (event: React.SyntheticEvent<HTMLAudioElement>) => {
     if (currentAudioRef.current && currentAudioRef.current !== event.target) {
@@ -57,49 +59,27 @@ export default function ViewTapes() {
     soundcloud: "https://soundcloud.com/808lang",
     youtube: "https://www.youtube.com/@808lang",
   };
-  const CustomNextArrow = (props: any) => {
-    const { className, onClick } = props;
-    return (
-      <Box
-        className={className}
-        onClick={onClick}
-        position="absolute"
-        top="50%"
-        right="30px"
-        transform="translateY(-50%)"
-        zIndex={2}
-        fontSize="40px"
-        color="white"
-        cursor="pointer"
-      >
-        <FaCircleArrowRight />
-      </Box>
-    );
-  };
 
-  const CustomPrevArrow = (props: any) => {
-    const { className, onClick } = props;
-    return (
-      <Box
-        className={className}
-        onClick={onClick}
-        position="absolute"
-        top="50%"
-        left="30px"
-        transform="translateY(-50%)"
-        zIndex={2}
-        fontSize="40px"
-        color="white"
-        cursor="pointer"
-      >
-        <FaCircleArrowLeft />
-      </Box>
-    );
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth; //window.innerWidth detects width :|
+      setWindowWidth(width);
+      if (width < 768) {
+        setVisibleSlides(1);
+      } else if (width < 1024) {
+        setVisibleSlides(2);
+      } else {
+        setVisibleSlides(3);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const settings = {
     className: "center",
-    dots: true,
+    // dots: true,
     infinite: true,
     speed: 500,
     centerMode: true,
@@ -121,11 +101,7 @@ export default function ViewTapes() {
       },
     ],
     afterChange: (index: number) => setCurrentSlide(index),
-    nextArrow: <CustomNextArrow />,
-    prevArrow: <CustomPrevArrow />,
   };
-  
-  
 
   return (
     <Box //Background
@@ -136,37 +112,34 @@ export default function ViewTapes() {
     >
       <Slider {...settings}>
         {albums.map((album, index) => {
-          const centerOffset = Math.floor(settings.slidesToShow / 1);
+          const centerOffset = Math.floor(settings.slidesToShow / 2);
           const normalizedCenterIndex =
             (currentSlide + centerOffset) % albums.length;
-          const isCenter = index === normalizedCenterIndex;
+          const isCenter =
+            visibleSlides > 1 &&
+            index ===
+              (currentSlide + Math.floor(visibleSlides / 2)) % albums.length;
 
           return (
             <Box
               key={album.id}
-              transform={isCenter ? "scale(1)" : "scale(0.6)"}
-              opacity={isCenter ? 1 : 0.6}
+              transform={
+                visibleSlides > 1
+                  ? isCenter
+                    ? "scale(1) translateY(10px)"
+                    : "scale(0.6) translateY(-75px)"
+                  : "scale(1)" 
+              }
+              opacity={visibleSlides > 1 ? (isCenter ? 1 : 0.6) : 1}
               zIndex={isCenter ? 1 : 0}
               transition="all 0.5s ease"
               display="flex"
               justifyContent="center"
               alignItems="center"
-              // minH="80vh"
+              minH="60vh"
               px={2}
             >
-              <VStack
-              // className="slide-container"
-              // spacing={6}
-              // p={6}
-              // bg={cardBg}
-              // borderRadius="2xl"
-              // boxShadow="xl"
-              // maxW="400px"
-              // w="100%"
-              // backdropFilter="blur(20px)"
-              // border="1px solid"
-              // borderColor="whiteAlpha.200"
-              >
+              <VStack>
                 <Image
                   src={album.cover}
                   alt={`${album.title} Cover`}
@@ -177,10 +150,10 @@ export default function ViewTapes() {
                 />
 
                 <Box textAlign="center">
-                  <Text fontSize="xl" fontWeight="bold" color="grey">
+                  <Text fontSize="xl" fontWeight="bold" color="purple.800">
                     {album.title}
                   </Text>
-                  <Text fontSize="md" color="gray.400">
+                  <Text fontSize="md" color="purple.600" fontWeight="semibold">
                     {album.artist}
                   </Text>
                 </Box>
@@ -190,7 +163,7 @@ export default function ViewTapes() {
                   onPlay={handlePlay}
                   controlsList="nodownload"
                   onContextMenu={(e) => e.preventDefault()}
-                  style={{ width: "100%", maxWidth: "100%"  }}
+                  style={{ width: "100%", maxWidth: "100%" }}
                 >
                   <source src={album.audioSrc} type="audio/mp3" />
                 </audio>
@@ -234,6 +207,7 @@ export default function ViewTapes() {
           );
         })}
       </Slider>
+      <SwipeHint />
     </Box>
   );
 }

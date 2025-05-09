@@ -27,16 +27,16 @@ export default function ViewBeats() {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
       if (!user) {
-        router.push("/signin"); // ✅ Redirect if not logged in
+        router.push("/signin"); //  Redirect if not logged in
       }
     });
 
     return () => unsubscribe();
-  }, [router]); // ✅ Depend on router
+  }, [router]); //  Depend on router
 
   useEffect(() => {
     //This runs as soon as the page loads because its useEffect :)
-    if (!user) return; // ✅ Don't fetch files if not logged in
+    if (!user) return; // Don't fetch files if not logged in
 
     const fetchAudioFiles = async () => {
       try {
@@ -54,7 +54,7 @@ export default function ViewBeats() {
     };
 
     fetchAudioFiles();
-  }); // ✅ Fetch only when user is available
+  }); //  Fetch only when user is available
 
   const handlePlay = (event: React.SyntheticEvent<HTMLAudioElement>) => {
     if (currentAudioRef.current && currentAudioRef.current !== event.target) {
