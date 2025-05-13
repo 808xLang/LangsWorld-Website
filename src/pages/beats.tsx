@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { auth, storage } from "../components/googleSignin/config";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 
-import "../styles/ViewBeats.css";
+import "../Tapes/styles/ViewBeats.css";
 import {
   Box,
   Button,

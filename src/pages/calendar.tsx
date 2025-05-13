@@ -4,7 +4,7 @@ import { add, format } from "date-fns";
 import { FC } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import '../styles/Calendar.css';
+import '../Tapes/styles/Calendar.css';
 import { INTERVAL, STORE_CLOSING_TIME, STORE_OPENING_TIME } from "../components/constants/config";
 import { Center } from "@chakra-ui/react";
 
