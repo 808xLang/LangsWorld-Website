@@ -56,7 +56,7 @@ export default function AboutPage() {
           transition="transform 0.3s"
           _hover={{ transform: "scale(1.05)" }}
         >
-          Hi! I'm Lang
+          Hi! my name is Langston
         </Text>
         <Text fontSize="3xl" fontWeight="bold">
           Producer, Software Engineer, and Creative

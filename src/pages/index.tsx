@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../components/navBar';
 import Homepage from './videos'
 import Calender from './calendar';
-import Tapes from './tapes'
+import Tapes from '../Tapes/tapes'
 
 import { ChakraProvider } from '@chakra-ui/react'
 

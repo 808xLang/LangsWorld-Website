@@ -12,28 +12,29 @@ import { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
 import { FaApple, FaSpotify, FaSoundcloud, FaYoutube } from "react-icons/fa";
 import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
-import SwipeHint from "../Tapes/swipe";
+import SwipeHint from "./swipe";
+// import Carousel from "./Carousel"
 
 const albums = [
   {
     id: "songwars",
     title: "Song Wars (Exclusive Premiere)",
     artist: "808Lang",
-    cover: "/images/album-cover.jpg",
+    cover: "/images/album-cover.jpg", 
     audioSrc: "/tapes/SW.mp3",
   },
   {
     id: "Brando X Lang",
-    title: "Brando x Lang",
+    title: "Flu",
     artist: "808Lang",
-    cover: "/images/album2-cover.jpg",
-    audioSrc: "/tapes/SunsetVibes.mp3",
+    cover: "/images/random2.jpg",
+    audioSrc: "/tapes/practice10.mp3",
   },
   {
     id: "LW2",
     title: "LangsWorld 2",
     artist: "808Lang",
-    cover: "/images/album3-cover.jpg",
+    cover: "/images/random.gif",
     audioSrc: "/tapes/MidnightWave.mp3",
   },
 ];
@@ -52,6 +53,8 @@ export default function ViewTapes() {
     }
     currentAudioRef.current = event.target as HTMLAudioElement;
   };
+
+
 
   const externalLinks = {
     apple: "https://music.apple.com/us/artist/808lang/1534681265",
@@ -121,16 +124,16 @@ export default function ViewTapes() {
               (currentSlide + Math.floor(visibleSlides / 2)) % albums.length;
 
           return (
-            <Box
+            <Box 
               key={album.id}
               transform={
-                visibleSlides > 1
+                visibleSlides > 2
                   ? isCenter
-                    ? "scale(1) translateY(10px)"
+                    ? "scale(.9) translateY(10px)"
                     : "scale(0.6) translateY(-75px)"
                   : "scale(1)" 
               }
-              opacity={visibleSlides > 1 ? (isCenter ? 1 : 0.6) : 1}
+              opacity={visibleSlides > 2 ? (isCenter ? 1 : 0.6) : 1}
               zIndex={isCenter ? 1 : 0}
               transition="all 0.5s ease"
               display="flex"
