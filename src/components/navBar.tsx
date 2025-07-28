@@ -315,7 +315,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ onClose }) => {
       borderColor={useColorModeValue("gray.200", "gray.700")}
     >
       {NAV_ITEMS.map((navItem) => (
-        <NextLink href={navItem.href ?? "#"} passHref
+        <NextLink key={navItem.label?.toString()} href={navItem.href ?? "#"} passHref
         onClick={onClose}
         >
           {navItem.label}
