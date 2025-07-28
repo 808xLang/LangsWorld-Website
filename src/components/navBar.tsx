@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import NextLink from "next/link";
 import { createContext, useEffect, useState, ReactNode } from "react";
 import { useRouter } from "next/router";
 import { auth } from "../components/googleSignin/config"; // Ensure you have the correct path
@@ -38,7 +39,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
 } from "@chakra-ui/react";
-
+import { Link as ChakraLink } from "@chakra-ui/react";
 import {
   HamburgerIcon,
   CloseIcon,
@@ -73,19 +74,19 @@ export default function WithSubnavigation() {
   return (
     <Box>
       <Flex
-        position="fixed"
-        top="0"
-        bg={bgColor}
-        zIndex={1000}
+        as="nav"
+        position="fixed" // 👈 Sticks it to the top
+        top="0" // 👈 Aligns it with the top of the screen
+        left="0"
+        right="0"
+        zIndex={1000} // 👈 Ensures it floats above everything else
+        bg={bgColor} // Keep your gradient or background here
         boxShadow="md"
-        minH={"80px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
-        borderBottom={3}
-        borderStyle={"solid"}
-        borderColor={bgShadow}
-        align={"center"}
+        align="center"
         justify="space-between"
+        minH="80px" // 👈 Ensures space for the menu below
         w="100%"
       >
         <Flex
@@ -210,9 +211,19 @@ export default function WithSubnavigation() {
         </Stack>
       </Flex>
 
-      <Collapse in={mobileNav.isOpen} animateOpacity>
-        <MobileNav />
+      <Collapse
+        in={mobileNav.isOpen}
+        animateOpacity
+        style={{
+          position: "absolute",
+          top: "350px",
+          width: "100%",
+          zIndex: 999,
+        }}
+      >
+        <MobileNav onClose={mobileNav.onClose} />
       </Collapse>
+
       <Box h="110px" />
     </Box>
   );
@@ -242,34 +253,33 @@ const DesktopNav = () => {
             {/* <Popover 
             // trigger="hover" placement="bottom-start"
             > */}
-              {/* <PopoverTrigger> */}
-              <Button
-                colorScheme="pink"
-                variant="ghost"
-                fontSize="lg"
-                fontWeight="bold"
-                as="a"
-                href={navItem.href}
-                color="purple.300"
-                _hover={{
-                  textDecoration: "none",
-                  color: "purple.400",
-                  bg: "whiteAlpha.100", // subtle background on hover
-                  transform: "scale(1.05)",
-                  boxShadow: "md",
-                  transition: "all 0.2s ease-in-out",
-                }}
-                _active={{
-                  transform: "scale(0.97)",
-                  boxShadow: "sm",
-                }}
-                _focus={{
-                  boxShadow: "outline",
-                }}
-              >
-                {navItem.label}
-              </Button>
-              
+            {/* <PopoverTrigger> */}
+            <Button
+              colorScheme="pink"
+              variant="ghost"
+              fontSize="lg"
+              fontWeight="bold"
+              as="a"
+              href={navItem.href}
+              color="purple.300"
+              _hover={{
+                textDecoration: "none",
+                color: "purple.400",
+                bg: "whiteAlpha.100", // subtle background on hover
+                transform: "scale(1.05)",
+                boxShadow: "md",
+                transition: "all 0.2s ease-in-out",
+              }}
+              _active={{
+                transform: "scale(0.97)",
+                boxShadow: "sm",
+              }}
+              _focus={{
+                boxShadow: "outline",
+              }}
+            >
+              {navItem.label}
+            </Button>
           </Box>
         ))}
       </Stack>
@@ -279,24 +289,9 @@ const DesktopNav = () => {
 
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   return (
-    <Menu
-    // as="a"
-    // href={href}
-    // role={"group"}
-    // display={"block"}
-    // p={2}
-    // rounded={"md"}
-    // _hover={{ bg: useColorModeValue("pink.50", "gray.900") }}
-    >
-      {/* <Stack direction={"row"} align={"center"}> */}
+    <Menu>
       <MenuButton as={Button} colorScheme="pink">
-        {/* <Text
-            transition={"all .3s ease"}
-            _groupHover={{ color: "pink.400" }}
-            fontWeight={500}
-          > */}
         {label}
-        {/* </Text> */}
       </MenuButton>
       <MenuList>
         <Text fontSize={"sm"}>{subLabel}</Text>
@@ -305,65 +300,27 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   );
 };
 
-const MobileNav = () => {
-  const bgShadow = useColorModeValue("gray.200", "gray.900");
+interface MobileNavProps {
+  onClose: () => void;
+}
+//BRAAA WHAT AM I DOING
+const MobileNav: React.FC<MobileNavProps> = ({ onClose }) => {
   return (
-    <Stack bg={bgShadow} p={4} display={{ md: "none" }}>
-      {NAV_ITEMS.map((navItem, key) => (
-        <MobileNavItem {...navItem} key={key} />
+    <Stack
+      bg={useColorModeValue("white", "gray.800")}
+      p={4}
+      spacing={4}
+      shadow="lg"
+      borderBottom="1px solid"
+      borderColor={useColorModeValue("gray.200", "gray.700")}
+    >
+      {NAV_ITEMS.map((navItem) => (
+        <NextLink href={navItem.href ?? "#"} passHref
+        onClick={onClose}
+        >
+          {navItem.label}
+        </NextLink>
       ))}
-    </Stack>
-  );
-};
-
-const MobileNavItem = ({ label, children, href }: NavItem) => {
-  const bgShadow = useColorModeValue("gray.200", "gray.900");
-
-  const igLink = "https://www.instagram.com/808lang/";
-  const igDownload = () => {
-    window.open(igLink, "_blank");
-  };
-
-  const { isOpen, onToggle } = useDisclosure();
-  console.log({ label });
-
-  return (
-    <Stack spacing={4} onClick={children && onToggle}>
-      <Box
-        py={2}
-        as="a"
-        href={href ?? "#"}
-        justifyContent="space-between"
-        alignItems="center"
-        _hover={{
-          textDecoration: "none",
-        }}
-      >
-        {typeof label === "string" ? (
-          <Text fontWeight={600} color={bgShadow}>
-            {label}
-          </Text>
-        ) : (
-          <Box>{label}</Box>
-        )}
-        {children && (
-          <Icon
-            as={ChevronDownIcon}
-            transition={"all .25s ease-in-out"}
-            transform={isOpen ? "rotate(180deg)" : ""}
-            w={6}
-            h={6}
-          />
-        )}
-      </Box>
-      <Collapse startingHeight={5} in={isOpen} animateOpacity>
-        {children &&
-          children.map((child, key) => (
-            <Box as="a" py={2} key={key} href={child.href}>
-              {child.label}
-            </Box>
-          ))}
-      </Collapse>
     </Stack>
   );
 };
@@ -384,22 +341,5 @@ const NAV_ITEMS: Array<NavItem> = [
   {
     label: "Videos",
     href: "/videos",
-
-  },
-  {
-    label: (
-      <Box p={2} fontSize={"3xl"}>
-        <FaInstagram />
-      </Box>
-    ), // Add padding and adjust font size
-    href: "https://www.instagram.com/808lang/",
-  },
-  {
-    label: (
-      <Box p={2} fontSize="4xl">
-        <FaSoundcloud />
-      </Box>
-    ), // Consistent styling
-    href: "https://soundcloud.com/808lang",
   },
 ];

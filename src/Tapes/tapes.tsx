@@ -13,7 +13,7 @@ import Slider from "react-slick";
 import { FaApple, FaSpotify, FaSoundcloud, FaYoutube } from "react-icons/fa";
 import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
 import SwipeHint from "./swipe";
-// import Carousel from "./Carousel"
+import Carousel from "./Carousel"
 
 const albums = [
   {
@@ -113,6 +113,7 @@ export default function ViewTapes() {
       py={12}
       px={4}
     >
+      <SwipeHint />
       <Slider {...settings}>
         {albums.map((album, index) => {
           const centerOffset = Math.floor(settings.slidesToShow / 2);
@@ -208,9 +209,11 @@ export default function ViewTapes() {
               </Box>
             </Box>
           );
-        })}
+        }
+        )
+        }
       </Slider>
-      <SwipeHint />
+      
     </Box>
   );
 }

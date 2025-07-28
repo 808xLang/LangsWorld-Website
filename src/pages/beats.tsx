@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { auth, storage } from "../components/googleSignin/config";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
+import { FiShoppingCart } from "react-icons/fi";
 
 import "../Tapes/styles/ViewBeats.css";
 import {
@@ -12,6 +13,7 @@ import {
   VStack,
   HStack,
   Flex,
+  Icon,
 } from "@chakra-ui/react";
 import { User } from "firebase/auth";
 
@@ -163,17 +165,26 @@ export default function ViewBeats() {
               </audio>
 
               <Button
+                leftIcon={<Icon as={FiShoppingCart} boxSize={5} />}
                 onClick={() => handlePurchase(beat.url, beat.name)}
                 bgGradient="linear(to-r, purple.500, pink.500)"
+                color="white"
                 _hover={{
-                  bgGradient: "linear(to-r, pink.500, purple.500)",
-                  transform: "scale(1.1)",
+                  bgGradient: "linear(to-r, pink.400, purple.400)",
+                  transform: "scale(1.05)",
+                  boxShadow: "xl",
                 }}
-                _active={{ transform: "scale(0.95)" }}
+                _active={{
+                  transform: "scale(0.97)",
+                  boxShadow: "md",
+                }}
                 size="lg"
                 width="full"
+                borderRadius="2xl"
+                transition="all 0.3s ease-in-out"
+                animation="pulse 2s infinite"
               >
-                Buy Now
+                Buy Now $19.99
               </Button>
             </VStack>
           </Box>

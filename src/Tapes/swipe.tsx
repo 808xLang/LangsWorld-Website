@@ -9,12 +9,12 @@ export default function SwipeHint() {
   return (
     <MovingText
       fontSize="3xl"
-      color="gray.300"
+      color="gray.100"
       fontWeight="semibold"
       textAlign="center"
       mt={4}
       initial={{ opacity: 1 }}
-      animate={{ opacity: [1, 0, 1] }}
+      animate={{ opacity: [1, 0.4, 1] }}
       transition={{
         duration: 5,
         repeat: Infinity,
