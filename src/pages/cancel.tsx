@@ -20,8 +20,7 @@ export default function Cancel() {
         </Text>
         <Text fontSize="lg" color="gray.300">
           No worries — your card was not charged. You can head back and grab
-          your beat whenever you're ready.
-        </Text>
+whenever you&apos;re ready.        </Text>
         <Button
           bgGradient="linear(to-r, purple.500, pink.500)"
           color="white"

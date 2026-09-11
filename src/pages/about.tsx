@@ -44,9 +44,9 @@ export default function AboutPage() {
           Software Engineer, Producer, and Creative
         </Text>
         <Text color="grey" fontSize="xl">
-          I'm a software engineer specializing in building and designing digital
-          experiences I'm focused on builing accessible human-centered products.
-        </Text>
+  I&apos;m a software engineer specializing in building and designing digital
+  experiences I&apos;m focused on builing accessible human-centered products.
+</Text>
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing={8} mt={10}>
           {projects.map((project) => (
             <Box

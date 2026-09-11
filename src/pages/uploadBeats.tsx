@@ -88,20 +88,20 @@ export default function UploadBeat() {
     fetchPackages();
   }, []);
 
-  useEffect(() => {
-    listAll(audioListRef)
-      .then((response) => {
-        response.items.forEach((item) => {
-          getDownloadURL(item).then((url) => {
-            setAudioList((prev) => [...prev, url]);
-          });
+useEffect(() => {
+  listAll(audioListRef)
+    .then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setAudioList((prev) => [...prev, url]);
         });
-      })
-      .catch((error) => {
-        console.error("Error listing files:", error);
-        setMessage("Could not load files. Please check permissions.");
       });
-  }, []); // This empty dependency array makes it so it runs the code then hits the array
+    })
+    .catch((error) => {
+      console.error("Error listing files:", error);
+      setMessage("Could not load files. Please check permissions.");
+    });
+}, []); // This empty dependency array makes it so it runs the code then hits the array
   
   if (!isAdmin) {
     return <p>Access denied: You do not have permission to upload files.</p>;

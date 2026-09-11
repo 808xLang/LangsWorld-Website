@@ -37,26 +37,25 @@ export default function ViewBeats() {
   }, [router]); //  Depend on router
 
   useEffect(() => {
-    //This runs as soon as the page loads because its useEffect :)
-    if (!user) return; // Don't fetch files if not logged in
+  if (!user) return;
 
-    const fetchAudioFiles = async () => {
-      try {
-        const response = await listAll(audioListRef);
-        const files = await Promise.all(
-          response.items.map(async (item) => {
-            const url = await getDownloadURL(item);
-            return { name: item.name, url };
-          })
-        );
-        setBeats(files);
-      } catch (error) {
-        console.error("Error fetching audio files:", error);
-      }
-    };
+  const fetchAudioFiles = async () => {
+    try {
+      const response = await listAll(audioListRef);
+      const files = await Promise.all(
+        response.items.map(async (item) => {
+          const url = await getDownloadURL(item);
+          return { name: item.name, url };
+        })
+      );
+      setBeats(files);
+    } catch (error) {
+      console.error("Error fetching audio files:", error);
+    }
+  };
 
-    fetchAudioFiles();
-  }, [user]); //  Fetch only when user is available
+  fetchAudioFiles();
+}, [user]);
 
   const handlePlay = (event: React.SyntheticEvent<HTMLAudioElement>) => {
     if (currentAudioRef.current && currentAudioRef.current !== event.target) {

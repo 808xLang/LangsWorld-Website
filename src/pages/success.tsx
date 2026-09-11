@@ -37,7 +37,7 @@ export default function Success() {
           </a>
         </div>
       ) : (
-        <p>We couldn't verify your purchase. If you were charged, contact support.</p>
+        <p>We couldn&apos;t verify your purchase. If you were charged, contact support.</p>
       )}
     </div>
   );
