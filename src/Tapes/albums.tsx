@@ -3,9 +3,16 @@ const albums = [
     id: "songwars",
     title: "Song Wars (Exclusive Premiere)",
     artist: "808Lang",
-    cover: "/images/album-cover.jpg", 
+    cover: "/images/album-cover.jpg",
     audioSrc: "/tapes/SW.mp3",
   },
+  {
+  id: "Wendywu",
+  title: "Wendy Wu",
+  artist: "808Lang",
+  cover: "/images/newcover.jpg",
+  audioSrc: "/tapes/newtrack.mp3",
+},
   {
     id: "Brando X Lang",
     title: "Flu",

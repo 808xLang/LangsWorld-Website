@@ -4,7 +4,7 @@ import { auth, storage } from "../components/googleSignin/config";
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { FiShoppingCart } from "react-icons/fi";
 
-import "../Tapes/styles/ViewBeats.css";
+
 import {
   Box,
   Button,
@@ -56,7 +56,7 @@ export default function ViewBeats() {
     };
 
     fetchAudioFiles();
-  }); //  Fetch only when user is available
+  }, [user]); //  Fetch only when user is available
 
   const handlePlay = (event: React.SyntheticEvent<HTMLAudioElement>) => {
     if (currentAudioRef.current && currentAudioRef.current !== event.target) {
@@ -80,10 +80,7 @@ export default function ViewBeats() {
 
     const data = await response.json();
     if (data.url) {
-      localStorage.setItem(
-        "purchasedBeat",
-        JSON.stringify({ beatUrl, beatName })
-      );
+      
       window.location.href = data.url;
     } else {
       console.error("Failed to get Stripe URL:", data);

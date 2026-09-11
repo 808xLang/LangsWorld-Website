@@ -24,18 +24,18 @@ const albums = [
     audioSrc: "/tapes/SW.mp3",
   },
   {
+    id: "Wendywu",
+    title: "Wendy Wu",
+    artist: "808Lang",
+    cover: "/images/WendyWu.jpg", 
+    audioSrc: "/tapes/wendy wu 3.mp3",
+  },
+  {
     id: "Brando X Lang",
     title: "Flu",
     artist: "808Lang",
     cover: "/images/random2.jpg",
     audioSrc: "/tapes/practice10.mp3",
-  },
-  {
-    id: "LW2",
-    title: "LangsWorld 2",
-    artist: "808Lang",
-    cover: "/images/random.gif",
-    audioSrc: "/tapes/MidnightWave.mp3",
   },
 ];
 
@@ -108,10 +108,10 @@ export default function ViewTapes() {
 
   return (
     <Box //Background
-      bgGradient="linear(to-br,rgb(250, 250, 255), #16213e)"
-      minH="100vh"
-      py={12}
-      px={4}
+      bgGradient="linear(to-br, rgba(15, 23, 42, 1), #050505ff, rgba(15, 23, 42, 1))" // deep blue/charcoal tones
+  minH="100vh"
+  py={12}
+  px={4}
     >
       <SwipeHint />
       <Slider {...settings}>
@@ -154,10 +154,10 @@ export default function ViewTapes() {
                 />
 
                 <Box textAlign="center">
-                  <Text fontSize="xl" fontWeight="bold" color="purple.800">
+                  <Text fontSize="xl" fontWeight="bold" color="white">
                     {album.title}
                   </Text>
-                  <Text fontSize="md" color="purple.600" fontWeight="semibold">
+                  <Text fontSize="md" color="white" fontWeight="semibold">
                     {album.artist}
                   </Text>
                 </Box>

@@ -65,7 +65,7 @@ export default function WithSubnavigation() {
   const router = useRouter();
 
   const bgColor = useColorModeValue(
-    "linear-gradient(90deg, rgba(134, 182, 255, 1) 50%, rgba(189, 147, 249, 1) 100%)",
+    "linear-gradient(90deg, rgba(15, 23, 42, 1), #050505ff 100%)",
     "gray.800"
   );
 
@@ -341,5 +341,9 @@ const NAV_ITEMS: Array<NavItem> = [
   {
     label: "Videos",
     href: "/videos",
+  },
+  {
+    label: "About",
+    href: "/about",
   },
 ];
